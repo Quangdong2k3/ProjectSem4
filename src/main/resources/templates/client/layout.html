@@ -1,0 +1,86 @@
+<!Doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{client/index.html}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head >
+       
+    </head>
+    <body layout:fragment="client-content">
+        <div class="header-area" th:insert="client/head::client-menu">
+            
+        </div>
+        <!--Header Area End-->
+		<!-- Mobile Menu Start -->
+		<section th:insert="client/head::client-mobile"></section>
+        <!--Header Area End-->
+		<!-- Mobile Menu Start -->
+
+        <section th:insert="client/head::client-breadcums"></section>
+		<!-- Breadcrumbs Area Start --> 
+        <!-- Single Product Area Start -->
+        <section layout:fragment="client-body"></section>
+        <!-- Single Product Area End -->
+        <!-- Related Product Area Start -->
+        
+        <!-- Related Product Area End -->
+		<!-- Footer Area Start -->
+		<footer th:insert="client/footer::client-footer">
+		    
+		</footer>
+        <script th:src="@{/user/js/vendor/jquery-1.12.0.min.js}"></script>
+                <!-- bootstrap js -->
+                <script th:src="@{'/user/js/bootstrap.min.js'}"></script>
+                <!-- owl.carousel js -->
+                <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+                <!-- jquery-ui js -->
+                <script th:src="@{/user/js/jquery-ui.min.js}"></script>
+                <!-- jquery Counterup js -->
+                <script th:src="@{/user/js/jquery.counterup.min.js}"></script>
+                <script th:src="@{/user/js/waypoints.min.js}"></script>	
+                <!-- jquery countdown js -->
+                <script th:src="@{/user/js/jquery.countdown.min.js}"></script>
+                <!-- jquery countdown js -->
+                <script type="text/javascript" th:src="@{/user/venobox/venobox.min.js}"></script>
+                <!-- jquery Meanmenu js -->
+                <script th:src="@{/user/js/jquery.meanmenu.js}"></script>
+                <!-- wow js -->
+                <script th:src="@{/user/js/wow.min.js}"></script>	
+                <script>
+                    new WOW().init();
+                </script>
+                <!-- scrollUp JS -->		
+                <script th:src="@{/user/js/jquery.scrollUp.min.js}"></script>
+                <!-- plugins js -->
+                <script th:src="@{/user/js/plugins.js}"></script>
+                <!-- Nivo slider js -->
+                <script th:src="@{/user/lib/js/jquery.nivo.slider.js}" type="text/javascript"></script>
+                <script th:src="@{/user/lib/home.js}" type="text/javascript"></script>
+                <script src="https://maps.googleapis.com/maps/api/js"></script>
+                <script>
+                    function initialize() {
+                      var mapOptions = {
+                        zoom: 16,
+                        scrollwheel: false,
+                        center: new google.maps.LatLng(23.763474, 90.431483)
+                      };
+                      var map = new google.maps.Map(document.getElementById('googleMap'),
+                          mapOptions);
+                      var marker = new google.maps.Marker({
+                        position: map.getCenter(),
+                        animation:google.maps.Animation.BOUNCE,
+                        icon: 'img/map-icon.png',
+                        map: map
+                      });
+                    }
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                </script>
+                <!-- main js -->
+                <script th:src="@{/user/js/main.js}"></script>
+                <script th:src="@{/user/customerJS/wishlist.js}"></script>
+                <script th:src="@{/user/customerJS/cart.js}"></script>
+        <div layout:fragment="client-script"></div>
+		<!-- Footer Area End -->
+		<!-- all js here -->
+		<!-- jquery latest version -->
+        <!-- <div th:insert="client/footer::client-script"></div> -->
+    </body>
+</html>

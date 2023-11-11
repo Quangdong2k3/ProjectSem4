@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/index.html}"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titleName}"></title>
+</head>
+<body>
+    <div class="content-wrapper" layout:fragment="customer-content">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0" th:text="${titleName}"></h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        
+        <!-- Main content -->
+        <section class="content">
+			<th:block th:if="${message}">
+        <p th:text="${message}" class="alert alert-success">This is where the message will appear.</p>
+    </th:block>
+      <div class="container-fluid">
+        <a th:href="@{/admin/book/create}" class="btn btn-primary bg-navy mb-5">Thêm sách</a>
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Danh sách các cuốn sách</h3>
+  
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+  
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                 
+   
+
+
+                <div class="card-body table-responsive p-0" style="height: 500px;">
+                  <table class="table table-head-fixed text-nowrap table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Tên sách</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thể loại</th>
+                        <th>Nhà xuất bản</th>
+                        <th>Control</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${list}">
+                            <td th:text="${p.id}"></td>
+                            <td th:text="${p.title}"></td>
+                            <td><img  class="w-75" th:src="@{'/images/'+	${p.image}}"/></td>
+                            <td th:text="${p.price}"></td>
+                            <td th:text="${p.quantity}"></td>
+                            <td th:text="${p.getCategory().name}"></td>
+                            <td th:text="${p.getPublisher().name}"></td>
+                       
+
+                            <td><a th:href="@{/admin/book/{id}/edit(id=${p.id})}" class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog' + ${p.id}">
+                              Xóa
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade"  th:id="'confirmDialog' + ${p.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDialogTitle">Xác nhận</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Bạn có muốn xóa bản ghi {Sách: ID=<p th:text="${p.id}"></p>,Title=<p th:text="${p.title}"></p>,Price=<p th:text="${p.price}"></p>}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form onsubmit="xacnhan()" th:method="post" th:action="@{/admin/book/{id}/delete(id=${p.id})}"><button type="submit" id="ConfirmButtonDel" class="btn btn-danger">Xóa</button></form>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div></td>
+    
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        <!-- /.row -->
+      </div>
+      
+      <!-- Modal -->
+      <!-- /.container-fluid -->
+    </section>
+        <!-- /.content -->
+      </div>
+      
+</body>
+</html>

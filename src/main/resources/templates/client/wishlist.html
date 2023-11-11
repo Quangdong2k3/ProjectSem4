@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section layout:fragment="client-body">
+        <div class="shopping-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="shop-widget">
+                            <div class="shop-widget-top">
+                                <aside class="widget widget-categories">
+                                    <h2 class="sidebar-title text-center">CATEGORY</h2>
+                                    <ul class="sidebar-menu">
+                                        <li>
+                                            <a href="#">
+                                               <i class="fa fa-angle-double-right"></i>
+                                                LEARNING                                          
+                                                <span>(5)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                               <i class="fa fa-angle-double-right"></i>
+                                                LIGHTING                                            
+                                                <span>(8)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                              <i class="fa fa-angle-double-right"></i>
+                                               LIVING ROOMS
+                                                <span>(4)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                               <i class="fa fa-angle-double-right"></i>
+                                                LAMP                                           
+                                                <span>(7)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </aside> 
+                                <aside class="widget shop-filter">
+                                    <h2 class="sidebar-title text-center">PRICE SLIDER</h2>
+                                    <div class="info-widget">
+                                        <div class="price-filter">
+                                            <div id="slider-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 3.57143%; width: 77.8571%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 3.57143%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 81.4286%;"></span></div>
+                                            <div class="price-slider-amount">
+                                                <input type="text" id="amount" name="price" placeholder="Add Your Price">
+                                                <div class="widget-buttom">
+                                                    <input type="submit" value="Filter">  
+                                                    <input type="reset" value="CLEAR">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aside>                            
+                            </div>
+                            <div class="shop-widget-bottom">
+                                <aside class="widget widget-tag">
+                                    <h2 class="sidebar-title">POPULAR TAG</h2>
+                                    <ul class="tag-list">
+                                        <li>
+                                            <a href="#">e-book</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">writer</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">book’s</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">eassy</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">nice</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">author</a>
+                                        </li>
+                                    </ul>
+                                </aside>
+                                <aside class="widget widget-seller">
+                                    <h2 class="sidebar-title">TOP SELLERS</h2>
+                                    <div class="single-seller">
+                                        <div class="seller-img">
+                                            <img th:src="@{/user/img/shop/1.jpg}" alt="">
+                                        </div>
+                                        <div class="seller-details">
+                                            <a href="shop.html"><h5>Book’s</h5></a>
+                                            <h5>110.000đ</h5>
+                                            <ul>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="single-seller">
+                                        <div class="seller-img">
+                                            <img th:src="@{/user/img/shop/2.jpg}" alt="">
+                                        </div>
+                                        <div class="seller-details">
+                                            <a href=""><h5>Book’s</h5></a>
+                                            <h5>65.000đ</h5>
+                                            <ul>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                                <li><i class="fa fa-star icolor"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="wishlist-right-area table-responsive">
+                            <table class="wish-list-table">
+                                <thead>
+                                    <tr>
+                                        <th class="t-product-name">Products</th>
+                                        <th class="product-details-comment">Product Details &amp; Comment</th>
+                                        <th class="product-price-cart">Add To Cart</th>
+                                        <th class="w-product-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                        
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="wishlist-bottom-link">
+                            <a class="wishlist-single-link" href="index.html">
+                                <i class="fa fa-angle-double-left"></i>
+                                Back
+                            </a>
+                            <div class="shopingcart-bottom-area wishlist-bottom-area pull-right">
+                                <a href="#" class="right-shoping-cart">SHARE WISHLIST</a>
+                                <a href="#" class="right-shoping-cart">ADD ALL TO CART</a>
+                                <a href="#" class="right-shoping-cart">UPDATE WISHLIST</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

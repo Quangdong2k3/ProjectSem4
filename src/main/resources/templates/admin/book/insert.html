@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title th:text="${titleName}"></title>
+</head>
+
+<body>
+	<div class="content-wrapper" layout:fragment="customer-content">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0" th:text="${titleName}"></h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">Dashboard v1</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row d-flex justify-content-center align-items-center">
+					<!-- left column -->
+					<div class="col-md-6">
+						<!-- general form elements -->
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title" th:text="${pageName}"></h3>
+							</div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form method="post" th:object="${book}" th:action="@{/admin/book/insert}"
+								enctype="multipart/form-data">
+								<div class="card-body">
+									<div class="form-group">
+										<!-- <input type="text" class="form-control" hidden name="id" id="exampleInputEmail1" placeholder="name" > -->
+										<label>Tên sách</label>
+										<input type="text" class="form-control" th:field="*{title}"
+											placeholder="name" />
+										<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Mô tả</label>
+										<input type="text" class="form-control" th:field="*{description}"
+											placeholder="Description" />
+										<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Giá</label>
+										<input type="text" class="form-control" th:field="*{price}"
+											placeholder="Description" />
+										<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Ảnh</label>
+										<input type="file" class="form-control" name="files" accept="image/*" onchange="loadImageASinggle(this)"
+											placeholder="Description" />
+
+									</div>
+									<div class="form-group">
+										<label>Số lượng:</label>
+										<input type="number" class="form-control" th:field="*{quantity}"
+											placeholder="Description" />
+										<span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Thể loại</label>
+										<select th:field="*{category_id}"
+											class="form-control" aria-label="Default select example">
+											<option th:value="0" selected>Chọn thể loại</option>
+											<option  th:each="cate : ${category}" th:value="${cate.id}" th:text="${cate.name}"></option>
+										</select>
+										<span th:if="${#fields.hasErrors('category_id')}" th:errors="*{category_id}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Nhà xuất bản</label>
+										<select th:field="*{publisher_id}" 
+											class="form-control" aria-label="Default select example">
+											<option th:value="0" selected>Chọn nhà xuất bản</option>
+											<option th:each="pub : ${publisher}" th:value="${pub.id}" th:text="${pub.name}"></option>
+										</select>
+
+										<span th:if="${#fields.hasErrors('publisher_id')}" th:errors="*{publisher_id}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label>Ngày xuất bản</label>
+										<input type="date" class="form-control" th:field="*{publication_date}"
+											id="yourDatePicker" placeholder="Chọn ngày tháng" />
+										<span th:if="${#fields.hasErrors('publication_date')}"
+											th:errors="*{publication_date}" class="text-danger"></span>
+									</div>
+								</div>
+								<!-- /.card-body -->
+
+								<div class="card-footer">
+									<button type="submit" class="btn btn-primary">Save</button>
+								</div>
+							</form>
+						</div>
+						
+						<!-- /.card -->
+
+						<!-- general form elements -->
+						<!-- /.card -->
+
+						<!-- Input addon -->
+						<!-- /.card -->
+						<!-- Horizontal Form -->
+						<!-- /.card -->	
+					</div>
+					<div class="col-md-3"><img class="w-75" id="anhxemtrc" src=""></div>
+					<!--/.col (left) -->
+					<!-- right column -->
+					<!--/.col (right) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+</body>
+
+</html>

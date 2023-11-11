@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div th:fragment="footer">
+      <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+      <!-- jQuery UI 1.11.4 -->
+      <script th:src="@{/admin/plugins/jquery-ui/jquery-ui.min.js}"></script>
+      <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+      <script>
+        $.widget.bridge("uibutton", $.ui.button);
+      </script>
+      <!-- Bootstrap 4 -->
+      <script
+        th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"
+      ></script>
+      <!-- ChartJS -->
+      <script th:src="@{/admin/plugins/chart.js/Chart.min.js}"></script>
+      <!-- Sparkline -->
+      <script th:src="@{/admin/plugins/sparklines/sparkline.js}"></script>
+      <!-- JQVMap -->
+      <script th:src="@{/admin/plugins/jqvmap/jquery.vmap.min.js}"></script>
+      <script
+        th:src="@{/admin/plugins/jqvmap/maps/jquery.vmap.usa.js}"
+      ></script>
+      <!-- jQuery Knob Chart -->
+      <script
+        th:src="@{/admin/plugins/jquery-knob/jquery.knob.min.js}"
+      ></script>
+      <!-- daterangepicker -->
+      <script th:src="@{/admin/plugins/moment/moment.min.js}"></script>
+      <script
+        th:src="@{/admin/plugins/daterangepicker/daterangepicker.js}"
+      ></script>
+      <!-- Tempusdominus Bootstrap 4 -->
+      <script
+        th:src="@{/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"
+      ></script>
+      <script
+        th:src="@{\admin\plugins\jquery-validation\jquery.validate.min.js}"
+      ></script>
+      <!-- Summernote -->
+      <script
+        th:src="@{/admin/plugins/summernote/summernote-bs4.min.js}"
+      ></script>
+      <!-- overlayScrollbars -->
+      <script
+        th:src="@{/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"
+      ></script>
+      <!-- AdminLTE App -->
+      <script th:src="@{/admin/dist/js/adminlte.js}"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script th:src="@{/admin/dist/js/demo.js}"></script>
+      <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+      <script th:src="@{/admin/dist/js/pages/dashboard.js}"></script>
+      <script th:src="@{https://cdn.jsdelivr.net/npm/toastify-js}"></script>
+      <script th:src="@{/admin/customerJS/Category.js}"></script>
+      <script th:src="@{/admin/customerJS/confirm.js}"></script>
+      <script th:src="@{/admin/customerJS/hienthianh.js}"></script>
+      <script src="https://unpkg.com/flatpickr"></script>
+	<script th:src="@{'https://unpkg.com/flatpickr/dist/l10n/vn.js'}"></script>
+
+      <script>
+
+       flatpickr("#yourDatePicker",{
+		   enableTime: true,
+          dateFormat: "d-m-Y",
+          maxDate: "today",
+     		locale:"vn",
+     		
+    
+         
+	   });
+       
+      </script>
+
+ 
+    </div>
+  </body>
+</html>

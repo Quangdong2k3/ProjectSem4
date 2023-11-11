@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section layout:fragment="client-body">
+        <div class="about-us-area section-padding">
+		    <div class="container">
+                <div class="row">
+                    <div class="about-top-inner">
+                        <div class="col-md-6">
+                            <div class="about-inner">
+                                <div class="about-title">
+                                    <h2>Our Story</h2>
+                                </div>
+                                <div class="about-content">
+                                    <p>Sách không chỉ là nơi lưu trữ tri thức từ lâu đời trong nhiều lĩnh vực khác nhau, mà còn là công cụ quan trọng giúp con người tiếp thu kiến thức, nâng cao tầm hiểu biết, và rèn luyện tâm hồn. Việc đọc sách giúp con người nâng cao kỹ năng và khả năng, cải thiện tư duy, và tìm kiếm cơ hội việc làm</p>
+                                    <p>sách trở thành công cụ chủ yếu giúp con người lưu trữ và lưu truyền tri thức trong xã hội. Có thể nói, lưu giữ tri thức trong sách là một trong những phương thức cổ xưa lâu đời nhất của con người còn duy trì cho đến ngày nay. Đọc một quyển sách là trở về với lịch sử, làm sống lại quá khứ của nhân loại trong lớp lớp thời gian</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="about-image">
+                                <img th:src="@{/user/img/about/1.jpg}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-bottom-inner">
+                        <div class="col-md-6">
+                            <div class="about-image">
+                                <img th:src="@{/user/img/about/2.jpg}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="about-inner">
+                                <div class="about-title">
+                                    <h2>Mission and Vission</h2>
+                                </div>
+                                <div class="about-content">
+                                    <p>Sách vẫn luôn đóng vai trò quan trọng đối với đời sống con người. Chúng ta cần học hỏi, đọc sách để tích lũy kiến thức, hoàn thiện bản thân và có thể đóng góp cho xã hội. Hãy luôn nhớ rằng đọc sách không chỉ là một cách để giải trí, mà còn là một phương tiện để nuôi dưỡng tâm hồn và phát triển.
+                                    </p>
+                                    <p>Với lòng yêu sách sâu sắc, Bookstore muốn lan tỏa nguồn tri thức vô tận thông qua sách đến với tất cả mọi người.Hi vọng chúng ta có thể tận hưởng hết được những tinh túy của sách mang lại.My Bookstore Love you!!!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+		</div>
+        <!-- Our Team Area Start -->
+		<div class="our-team-area">
+		    <h2 class="section-title">OUR WRITER</h2>
+		    <div class="container">
+		        <div class="row">
+		        <div class="team-list indicator-style">
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/1.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">THAO TÚNG TÂM LÝ - NHẬN DIỆN, THỨC TỈNH VÀ CHỮA LÀNH NHỮNG TỔN THƯƠNG TIỀM ẨN</a>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/2.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">Sách Tiếng Anh Cho Người Bắt Đầu</a>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/3.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">Ngày đòi nợ (sách in lại)</a>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/4.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">Nếu Chỉ Còn Một Ngày Để Sống</a>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/2.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">THAO TÚNG TÂM LÝ - NHẬN DIỆN, THỨC TỈNH VÀ CHỮA LÀNH NHỮNG TỔN THƯƠNG TIỀM ẨN</a>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-md-3">
+		                <div class="single-team-member">
+		                    <a href="#">
+		                        <img th:src="@{/user/img/about/team/1.jpg}" alt="">
+		                    </a>
+		                    <div class="member-info">
+		                        <a href="#">Sách Tiếng Anh Cho Người Bắt Đầu</a>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        </div>
+		    </div>
+		</div>
+		<!-- Our Team Area End -->
+    </section>
+</body>
+</html>

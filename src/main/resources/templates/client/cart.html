@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section layout:fragment="client-body">
+        <div class="shopping-cart-area section-padding">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-md-12">
+                        <div class="wishlist-table-area table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">Remove</th>
+                                        <th class="product-image">Image</th>
+                                        <th class="t-product-name">Product Name</th>
+                                        <th class="product-edit">Edit</th>
+                                        <th class="product-unit-price">Unit Price</th>
+                                        <th class="product-quantity">Quantity</th>
+                                        <th class="product-subtotal">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>	
+                        <div class="shopingcart-bottom-area">
+                            <a class="left-shoping-cart" href="#">CONTINUE SHOPPING</a>
+                            <div class="shopingcart-bottom-area pull-right">
+								<a class="right-shoping-cart" style="cursor: pointer;" onclick="clearCart()">CLEAR SHOPPING CART</a>
+								<a class="right-shoping-cart" href="#">UPDATE SHOPPING CART</a>
+							</div>
+                        </div>	                
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        <!-- Discount Area Start -->
+        <div class="discount-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="discount-main-area">
+                            <div class="discount-top">
+                                <h3>DISCOUNT CODE</h3>
+                                <p>Enter your coupon code if have one</p>
+                            </div>
+                            <div class="discount-middle">
+                                <input type="text" placeholder="">
+                                <a class="" href="#">APPLY COUPON</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="subtotal-main-area">
+                            <div class="subtotal-area">
+                                <h2>SUBTOTAL<span id="subtotal_price">25.000đ</span></h2>
+                            </div>
+                            <div class="subtotal-area">
+                                <h2>GRAND TOTAL<span>210.000đ</span></h2>
+                            </div>
+                            <a href="#">CHECKOUT</a>
+                            <p>Checkout With Multiple Addresses</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Discount Area End -->	
+    </section>
+    <div layout:fragment="client-script">
+		
+	<script>
+        getAllViewCart();
+function getAllViewCart() {
+            $.ajax({
+              url: "http://localhost:8080/BookStore/api/Cart/getAll", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+              type: "GET",
+              contentType: "application/json",
+              dataType: "json",
+              success: function (data) {
+                
+                $("tbody").empty();
+                var dem = 0;
+                var total = 0;
+                // Duyệt qua danh sách dữ liệu và cập nhật tbody
+                data.forEach(function (data) {
+                  total += data.book.price * data.quantity;
+                  var row =
+                    '<tr>';
+
+                  row +=
+                    '<td class="product-remove"><a style="cursor:pointer;" onclick="deleteCart('+data.id+')"><i class="flaticon-delete"></i> </a></td>';
+                  row +=
+                    '<td class="product-image"><a href="#"><img src="/images/'+data.book.image+'" alt=""></a></td>';
+
+                    row +='<td class="t-product-name"><h3><a href="#">'+data.book.title+'</a></h3></td>';
+                    row+='<td class="product-edit"><p><a style="cursor:pointer" onclick="editCart('+data.book.id+','+data.book.price+')">Edit</a></p></td>';
+                    row+='<td class="product-unit-price"><p>'+data.price.toLocaleString('en-US')+'đ</p></td>';
+   
+                    row+='<td class="product-quantity product-cart-details"><input type="number" class="soluong_'+data.book.id+'" value="'+data.quantity+'"></td><td class="product-quantity"><p>'+(data.book.price*data.quantity).toLocaleString('en-US')+'đ</p></td>';
+                  row += "</tr>";
+                  $("tbody").append(row);
+                  dem++;
+                });
+                $('#subtotal_price').html(total.toLocaleString('en-US')+'đ');
+                $(".shoping-cart a span").html(dem);
+              },
+              error: function () {
+                console.log("Lỗi khi tải dữ liệu qua AJAX");
+              },
+            });
+          }
+          function clearCart() {
+  var rs = confirm("Are you sure you want to delete all?");
+  if (rs) {
+    $.ajax({
+      url: "http://localhost:8080/BookStore/api/Cart/clearAll", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+      type: "DELETE",
+      success: function () {
+        getAllViewCart();
+        getAllCart();
+      },
+      error: function () {
+        console.log("Lỗi khi tải dữ liệu qua AJAX");
+      },
+    });
+  }
+}
+function editCart(book_id, w_price) {
+  let itemToAdd = {
+    book_id: book_id,
+    price: w_price,
+    quantity: $(".soluong_"+book_id).val(),
+    // Thêm các thuộc tính khác tại đây
+  };
+  console.log($(".soluong_"+book_id).val());
+  $.ajax({
+    url: "http://localhost:8080/BookStore/api/Cart/update", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+    type: "PUT",
+    contentType: "application/json",
+    data: JSON.stringify(itemToAdd),
+    success: function (data) {
+      alert("Cập nhật giỏ hàng thành công");
+      getAllViewCart();
+        getAllCart();
+    },
+    error: function (error) {
+      console.log(error.responseText);
+    },
+  });
+}
+    </script>
+        
+        
+
+    </div>
+</body>
+</html>

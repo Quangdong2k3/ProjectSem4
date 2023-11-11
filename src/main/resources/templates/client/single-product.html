@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section layout:fragment="client-body">
+        <div class="single-product-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-7">
+                        <div class="single-product-image-inner">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="one">
+                                    <a class="venobox" href="img/single-product/bg-1.jpg" data-gall="gallery" title="">
+                                        <img th:src="@{/user/img/single-product/bg-1.jpg}" alt="">
+                                    </a>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="two">
+                                    <a class="venobox" href="img/single-product/bg-2.jpg" data-gall="gallery" title="">
+                                        <img th:src="@{/user/img/single-product/bg-2.jpg}" alt="">
+                                    </a>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="three">
+                                    <a class="venobox" th:href="@{/user/img/single-product/bg-3.jpg}" data-gall="gallery" title="">
+                                        <img th:src="@{/user/img/single-product/bg-3.jpg}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Nav tabs -->
+                            <ul class="product-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/1.jpg}" alt=""></a></li>
+                                <li role="presentation"><a href="#two" aria-controls="two" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/2.jpg}" alt=""></a></li>
+                                <li role="presentation"><a href="#three" aria-controls="three" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/3.jpg}" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-5">
+                        <div class="single-product-details">
+                            <div class="list-pro-rating">
+                                <i class="fa fa-star icolor"></i>
+                                <i class="fa fa-star icolor"></i>
+                                <i class="fa fa-star icolor"></i>
+                                <i class="fa fa-star icolor"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <h2>Lạc quan tếu</h2>
+                            <div class="availability">
+                                <span>In stock</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                            <div class="single-product-price">
+                                <h2>68.000đ</h2>
+                            </div>
+                            <div class="product-attributes clearfix">
+                                <span class="pull-left" id="quantity-wanted-p">
+									<span class="dec qtybutton">-</span>
+									<input type="text" value="1" class="cart-plus-minus-box">
+									<span class="inc qtybutton">+</span>	
+								</span>
+                               <span>
+                                    <a class="cart-btn btn-default" href="cart.html">
+                                        <i class="flaticon-shop"></i>
+                                        Add to cart
+                                    </a>
+                               </span>
+                            </div>
+                            <div class="add-to-wishlist">
+                                <a class="wish-btn" href="cart.html">
+                                    <i class="fa fa-heart-o"></i>
+                                    ADD TO WISHLIST
+                                </a>
+                            </div>
+                            <div class="single-product-categories">
+                               <label>Categories:</label>
+                                <span>e-book, biological, business</span>
+                            </div>
+                            <div class="social-share">
+                                <label>Share: </label>
+                                <ul class="social-share-icon">
+                                    <li><a href="#"><i class="flaticon-social"></i></a></li>
+                                    <li><a href="#"><i class="flaticon-social-1"></i></a></li>
+                                    <li><a href="#"><i class="flaticon-social-2"></i></a></li>
+                                </ul> 
+                            </div>
+                            <div id="product-comments-block-extra">
+								<ul class="comments-advices">
+									<li>
+										<a href="#" class="open-comment-form">Write a review</a>
+									</li>
+								</ul>
+							</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+					<div class="col-md-9">
+                        <div class="p-details-tab-content">
+                            <div class="p-details-tab">
+                                <ul class="p-details-nav-tab" role="tablist">
+                                    <li role="presentation" class="active"><a href="#more-info" aria-controls="more-info" role="tab" data-toggle="tab">Description</a></li>
+                                    <li role="presentation"><a href="#data" aria-controls="data" role="tab" data-toggle="tab">Review</a></li>
+                                    <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Tab</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab-content review">
+                                <div role="tabpanel" class="tab-pane active" id="more-info">
+                                    <p>Nếu tìm kiếm trên Google những cuốn sách tài chính kinh điển mà mọi nhà đầu tư nên đọc, bạn sẽ thấy cái tên Lạc Quan Tếu (Irrational Exuberance) của giáo sư kinh tế học Robert Shiller xuất hiện ở nhiều danh sách uy tín khác nhau. 
+
+                                        Và khi Robert Shiller cảnh báo bong bóng đang nổi lên khắp nơi trên thị trường, mọi người đều phải thận trọng lắng nghe.
+                                        
+                                        Nếu như tương lai của bạn phụ thuộc vào tài khoản hưu trí, nhà ở, chứng khoán hoặc bất cứ khoản đầu tư nào khác, cuốn sách Lạc Quan Tếu của Robert Shiller là tài liệu bạn bắt buộc phải nghiên cứu thật kỹ lưỡng.</p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="data">
+                                    <table class="table-data-sheet">
+                                        <tbody>
+                                            <tr class="odd">
+                                                <td>material</td>
+                                                <td> Bristol</td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td>Size</td>
+                                                <td>27cm x 24cm</td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td>classify</td>
+                                                <td>new</td>
+                                            </tr>
+                                        </tbody>
+                                   </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="reviews">
+                                    <div id="product-comments-block-tab">
+                                        <a href="#" class="comment-btn"><span>Be the first to write your review!</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+				</div>  
+            </div>
+        </div>
+        <div class="related-product-area">
+            <h2 class="section-title">RELATED PRODUCTS</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="related-product indicator-style">
+                        <div class="col-md-3">
+                            <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/1.jpg}">
+                                        <div class="price">120.000đ</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick View">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Đừng Để Nỗi Sợ Cản Đường Bạn- Sách tâm lý</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/2.jpg}">
+                                        <div class="price">135.000đ</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Suy nghĩ ngược- Cuốn sách cải thiện duy nghĩ của bạn</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/3.jpg}">
+                                        <div class="price">93.000đ</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Khéo ăn khéo nói sẽ có được thiên hạ - TVT Group</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/4.jpg}">
+                                        <div class="price">110.000đ</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Kể Chuyện Cuộc Đời Các Thiên Tài - Albert Einstein Tuổi Thơ Gian Khó...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/5.jpg}">
+                                        <div class="price"><span>$</span>160</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Twilight</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                               <div class="single-banner">
+                                <div class="product-wrapper">
+                                    <a href="#" class="single-banner-image-wrapper">
+                                        <img alt="" th:src="@{/user/img/featured/6.jpg}">
+                                        <div class="price"><span>$</span>160</div>
+                                        <div class="rating-icon">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </a>
+                                    <div class="product-description">
+                                        <div class="functional-buttons">
+                                            <a href="#" title="Add to Cart">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a href="#" title="Add to Wishlist">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                                <i class="fa fa-compress"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="banner-bottom text-center">
+                                    <a href="#">Cold mountain</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
