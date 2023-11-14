@@ -10,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Data;
+import lombok.*;
+
 
 /**
  *
@@ -18,7 +19,9 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "CATEGORIES")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Category {
 
     @Id

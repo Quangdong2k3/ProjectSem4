@@ -26,11 +26,9 @@ public class Order {
 	private Integer status;
 
 	@OneToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	@OneToOne
-	@JoinColumn(name = "employee_id")
-	private Employee employee;
+
 
 }

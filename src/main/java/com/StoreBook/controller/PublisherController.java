@@ -18,7 +18,7 @@ import com.StoreBook.entity.Publisher;
 import com.StoreBook.service.PublisherService;
 
 @Controller
-@RequestMapping(value = "/admin/publisher")
+@RequestMapping(value = "/BookStore/admin/publisher")
 
 public class PublisherController {
     @Autowired
@@ -49,7 +49,7 @@ public class PublisherController {
 
         }
         publisherService.add(p);
-        return "redirect:/admin/publisher";
+        return "redirect:/BookStore/admin/publisher";
     }
     @GetMapping(value = "edit/{id}")
     public String edit(@PathVariable("id") Long id,Model model) {
@@ -78,6 +78,6 @@ public class PublisherController {
     public String delete(@PathVariable("id") Long id) {
         
         publisherService.delete(id);
-        return "redirect:/admin/publisher";
+        return "redirect:/BookStore/admin/publisher";
     }
 }

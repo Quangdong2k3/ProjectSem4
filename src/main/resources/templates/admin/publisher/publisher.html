@@ -33,7 +33,7 @@
         <!-- Main content -->
         <section class="content">
       <div class="container-fluid">
-        <a th:href="@{/admin/publisher/create}" class="btn btn-primary bg-navy mb-5">Thêm nhà xuất bản</a>
+        <a th:href="@{/BookStore/admin/publisher/create}" class="btn btn-primary bg-navy mb-5">Thêm nhà xuất bản</a>
         <div class="row">
             <div class="col-12">
               <div class="card">
@@ -72,7 +72,7 @@
                             <td th:text="${p.location}"></td>
                             <td><a  th:text="${p.website}" th:target="self" class="text-link" th:href="@{${p.website}}"></a></td>
 
-                            <td><a th:href="@{/admin/publisher/edit/{id}(id=${p.id})}"  class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog'+${p.id}">
+                            <td><a th:href="@{/BookStore/admin/publisher/edit/{id}(id=${p.id})}"  class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog'+${p.id}">
                               Xóa
                             </button>
                             

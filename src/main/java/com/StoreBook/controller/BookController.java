@@ -38,7 +38,7 @@ import com.StoreBook.service.PublisherService;
 ;
 
 @Controller
-@RequestMapping("/admin/book")
+@RequestMapping("/BookStore/admin/book")
 public class BookController {
 	@Autowired
 	BookService bookService;
@@ -177,7 +177,7 @@ public class BookController {
 			System.out.println(bookDTO.getPublication_date());
 			redirectAttributes.addFlashAttribute("message", "Thêm dữ liệu thành công");
 			bookService.add(bookDTO);
-			return "redirect:/admin/book";
+			return "redirect:/BookStore/admin/book";
 		}
 
 	}
@@ -186,7 +186,7 @@ public class BookController {
 	public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("message", "Xóa dữ liệu thành công");
 		bookService.delete(id);
-		return "redirect:/admin/book";
+		return "redirect:/BookStore/admin/book";
 	}
 
 	@GetMapping("{id}/edit")
@@ -224,7 +224,7 @@ public class BookController {
 			redirectAttributes.addFlashAttribute("message", "Cập nhật dữ liệu thành công");
 
 			bookService.update(id, bookDTO);
-			return new ModelAndView(new RedirectView("/admin/book"));
+			return new ModelAndView(new RedirectView("/BookStore/admin/book"));
 		}
 
 	}

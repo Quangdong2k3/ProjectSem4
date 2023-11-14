@@ -9,23 +9,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+
 @Table(name = "CARTS")
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +32,9 @@ public class Cart {
 	private double price;
 
 	@ManyToOne	
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name = "user_id")
 	@JsonManagedReference
-	private Customer customer;
+	private User user;
 	
 	
 	

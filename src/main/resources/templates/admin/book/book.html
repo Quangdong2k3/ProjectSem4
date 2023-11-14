@@ -36,7 +36,7 @@
         <p th:text="${message}" class="alert alert-success">This is where the message will appear.</p>
     </th:block>
       <div class="container-fluid">
-        <a th:href="@{/admin/book/create}" class="btn btn-primary bg-navy mb-5">Thêm sách</a>
+        <a th:href="@{/BookStore/admin/book/create}" class="btn btn-primary bg-navy mb-5">Thêm sách</a>
         <div class="row">
             <div class="col-12">
               <div class="card">
@@ -86,7 +86,7 @@
                             <td th:text="${p.getPublisher().name}"></td>
                        
 
-                            <td><a th:href="@{/admin/book/{id}/edit(id=${p.id})}" class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog' + ${p.id}">
+                            <td><a th:href="@{/BookStore/admin/book/{id}/edit(id=${p.id})}" class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog' + ${p.id}">
                               Xóa
                             </button>
                             
@@ -105,7 +105,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form onsubmit="xacnhan()" th:method="post" th:action="@{/admin/book/{id}/delete(id=${p.id})}"><button type="submit" id="ConfirmButtonDel" class="btn btn-danger">Xóa</button></form>
+                                    <form onsubmit="xacnhan()" th:method="post" th:action="@{/BookStore/admin/book/{id}/delete(id=${p.id})}"><button type="submit" id="ConfirmButtonDel" class="btn btn-danger">Xóa</button></form>
                                     
                                   </div>
                                 </div>

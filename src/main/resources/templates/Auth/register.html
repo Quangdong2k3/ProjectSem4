@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" th:href="@{/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/admin/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="register-logo">
+        <a href="../../index2.html"><b>Admin</b>LTE</a>
+      </div>
+    
+      <div class="card">
+        <div class="card-body register-card-body">
+          <p class="login-box-msg">Register a new membership</p>
+    
+          <form action="../../index.html" method="post">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="fullname" placeholder="Full name" name="fullname">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Retype password">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <input type="text" hidden readonly name="" id="role_id" value="2">
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="terms" name="terms">
+                  <label for="terms">
+                   I agree to the <a href="#">terms</a>
+                  </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" onclick="return registerUserDefault()" class="btn btn-primary btn-block">Register</button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+    
+          <div class="social-auth-links text-center">
+            <p>- OR -</p>
+            <a href="#" class="btn btn-block btn-primary">
+              <i class="fab fa-facebook mr-2"></i>
+              Sign up using Facebook
+            </a>
+            <a href="#" class="btn btn-block btn-danger">
+              <i class="fab fa-google-plus mr-2"></i>
+              Sign up using Google+
+            </a>
+          </div>
+    
+          <a href="/login" class="text-center">I already have a membership</a>
+        </div>
+        <!-- /.form-box -->
+      </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <div id="errorMessage"></div>
+    
+    
+    
+<!-- jQuery -->
+<script th:src="@{'/admin/plugins/jquery/jquery.min.js'}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{'/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{'/admin/dist/js/adminlte.min.js'}"></script>
+<script>
+    function registerUserDefault() {
+        var check_terms = false;
+        if($('#terms').prop('checked')) {
+            check_terms = true;
+        }
+        let userData = {
+            fullname: $('#fullname').val(),
+            email: $('#email').val(),
+            password: $('#password').val(),
+            confirm_password: $('#confirm_password').val(),
+            role_id: $("#role_id").val(),
+            terms: check_terms
+        }
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/api/register',
+            data: JSON.stringify(userData),
+            success: function(response) {
+                alert(response); // Hiển thị thông báo thành công
+            },
+            error: function(xhr) {
+                $("#errorMessage").empty();
+                $("#errorMessage").text(xhr.responseJSON.email);
+
+                console.log(xhr.responseJSON.email+ ": " + xhr.responseJSON.fullname)
+       
+      
+            }
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

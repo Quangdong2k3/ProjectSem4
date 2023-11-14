@@ -174,17 +174,20 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                         <div class="col-md-4 col-sm-6" th:each="b : ${book}">
 											<div class="single-banner">
 												<div class="product-wrapper">
-													<a th:href="@{/BookStore/book/{id}/detail(id=${b.id})}" class="single-banner-image-wrapper">
+													<a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" class="single-banner-image-wrapper">
 														<img alt="" th:src="@{'/images/'+${b.image}}">
 														<div class="price" th:text="${#numbers.formatDecimal(b.price,3,'POINT',0,'COMMA')}+'đ'"></div>
 
 													</a>
 													<div class="product-description">
 														<div class="functional-buttons">
-															<a th:onclick="addCart([[${b.id}]],[[${b.price}]],1)"  title="Add to Cart">
+                                                       <a sec:authorize="isAuthenticated()" th:onclick="addCart([[${b.id}]],[[${b.price}]],1)"  title="Add to Cart">
 																<i class="fa fa-shopping-cart"></i>
 															</a>
 															
+														<a sec:authorize="!isAuthenticated()" href="/login"  title="Add to Cart">
+																<i class="fa fa-shopping-cart"></i>
+															</a>
 																<a th:onclick="addWishList([[${b.id}]],[[${b.price}]],1)" title="Add to Wishlist">
 																<i class="fa fa-heart-o"></i>
 															</a>
@@ -197,7 +200,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
 												</div>
 												<div class="banner-bottom text-center">
 													<div class="banner-bottom-title">
-														<a th:href="@{/BookStore/book/{id}/detail(id=${b.id})}" th:text="${b.title}"></a>
+														<a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" th:text="${b.title}"></a>
 													</div>
 													<div class="rating-icon">
 														<i class="fa fa-star icolor"></i>
@@ -216,7 +219,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                         <div class="single-shop-product" th:each="b : ${book}">
                                             <div class="col-xs-12 col-sm-5 col-md-4">
                                                 <div class="left-item">
-                                                    <a th:href="@{/BookStore/book/{id}/detail(id=${b.id})}" title="East of eden">
+                                                    <a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" title="East of eden">
                                                         <img th:src="@{'/images/'+${b.image}}" alt="">
                                                     </a>
                                                 </div>
@@ -224,7 +227,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <div class="col-xs-12 col-sm-7 col-md-8">
                                                 <div class="deal-product-content">
                                                     <h4>
-                                                        <a th:href="@{/BookStore/book/{id}/detail(id=${b.id})}" title="East of eden" th:text="${b.title}"></a>
+                                                        <a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" title="East of eden" th:text="${b.title}"></a>
                                                     </h4>
                                                     <div class="product-price">
                                                         <span class="new-price" th:text="${#numbers.formatDecimal(b.price,3,'POINT',0,'COMMA')}+'đ'">120.000đ</span>
@@ -275,7 +278,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                     <div class="price-box">
                                         <p class="s-price"><span class="special-price"><span class="amount" th:text="${#numbers.formatDecimal(b.price,3,'POINT',0,'COMMA')}+'đ'"></span></span></p>
                                     </div>
-                                    <a th:href="@{/BookStore/book/{id}/detail(id=${b.id})}" class="see-all">See all features</a>
+                                    <a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" class="see-all">See all features</a>
                                     <div class="quick-add-to-cart">
                                         <form method="post" class="cart">
                                             <div class="numbers-row">

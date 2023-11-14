@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    console.log(123)
     getAllWishlist();
 })
 function editWishlist(w_id,book_id,w_price){
@@ -13,7 +12,7 @@ function editWishlist(w_id,book_id,w_price){
         // Thêm các thuộc tính khác tại đây
     };
     $.ajax({
-        url: 'http://localhost:8080/BookStore/mywishlist/edit', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+        url: 'http://localhost:8080/BookStore/client/mywishlist/edit', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
         type: 'PUT',
         contentType: "application/json",
         data: JSON.stringify(itemToAdd),
@@ -28,9 +27,9 @@ function editWishlist(w_id,book_id,w_price){
     });
 }
 function deleteWishlist(w_id){
-    getAllWishlist();
+    
     $.ajax({
-        url: "http://localhost:8080/BookStore/mywishlist/remove/"+w_id, // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+        url: "http://localhost:8080/BookStore/client/mywishlist/remove/"+w_id, // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
         type: 'DELETE',
         success: function() {
             getAllWishlist();
@@ -49,7 +48,7 @@ function addWishList(book_id,w_price,w_quantity){
         // Thêm các thuộc tính khác tại đây
     };
     $.ajax({
-        url: 'http://localhost:8080/BookStore/mywishlist/add', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+        url: 'http://localhost:8080/BookStore/client/mywishlist/add', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
         type: 'POST',
         contentType: "application/json",
         data: JSON.stringify(itemToAdd),
@@ -65,7 +64,7 @@ function addWishList(book_id,w_price,w_quantity){
 
 function getAllWishlist(){
     $.ajax({
-        url: 'mywishlist/getAll', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+        url: 'http://localhost:8080/BookStore/client/mywishlist/getAll', // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
         type: 'GET',
         contentType: "application/json",
         dataType: 'json',
@@ -81,7 +80,7 @@ function getAllWishlist(){
                 row += '<td class="product-image"><a href="#"><img  src="'+'/images/'+ w.book.image+'" alt=""></a></td>';
                 row += '<td class="product-details"><h4>' + w.book.title + '</h4><p>' + w.book.description + '</p><textarea placeholder="Please Enter Your Comment"></textarea></td>';
                 row += '<td class="product-cart"><div class="product-cart-details"><span>' + w.book.price.toLocaleString('en-US') + 'đ</span><input type="number" name="w_quantity" class="w_quantity" value="' + w.quantity + '"><input type="submit" value="ADD TO CART"></div><p><a  onclick="editWishlist('+w.id+','+w.book.id+','+w.book.price+')">Edit</a></p></td>';
-                row += '<td class="product-remove"><a onclick="deleteWishlist(' + w.id + ')"><i class="flaticon-delete"></i></a></td>';
+                row += '<td class="product-remove"><a style="cursor:pointer" onclick="deleteWishlist(' + w.id + ')"><i class="flaticon-delete"></i></a></td>';
                 row += '</tr>';
                 $('tbody').append(row);
             });

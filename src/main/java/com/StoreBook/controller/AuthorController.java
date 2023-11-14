@@ -20,7 +20,7 @@ import com.StoreBook.entity.Author;
 import com.StoreBook.service.AuthorService;
 
 @Controller
-@RequestMapping(value = "/admin/author")
+@RequestMapping(value = "/BookStore/admin/author")
 public class AuthorController {
 	@Autowired
 	AuthorService authorService;
@@ -50,7 +50,7 @@ public class AuthorController {
 
 		}
 		authorService.add(author);
-		return "redirect:/admin/author";
+		return "redirect:/BookStore/admin/author";
 	}
 
 	@GetMapping(value = "edit/{id}")
@@ -80,6 +80,6 @@ public class AuthorController {
 	public String delete(@PathVariable("id") Long id) {
 
 		authorService.delete(id);
-		return "redirect:/admin/author";
+		return "redirect:/BookStore/admin/author";
 	}
 }

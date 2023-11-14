@@ -33,7 +33,7 @@
         <!-- Main content -->
         <section class="content">
       <div class="container-fluid">
-        <a th:href="@{/admin/author/create}" class="btn btn-primary bg-navy mb-5">Thêm tác giả</a>
+        <a th:href="@{/BookStore/admin/author/create}" class="btn btn-primary bg-navy mb-5">Thêm tác giả</a>
         <div class="row">
             <div class="col-12">
               <div class="card">
@@ -69,7 +69,7 @@
                             <td th:text="${Author.id}"></td>
                             <td th:text="${Author.name}"></td>
                             <td th:text="${Author.biography}"></td>
-                            <td><a th:href="@{/admin/author/edit/{id}(id=${Author.id})}" class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog' + ${Author.id}">
+                            <td><a th:href="@{/BookStore/admin/author/edit/{id}(id=${Author.id})}" class="btn btn-info">Edit</a><button type="button" class="btn btn-secondary" data-toggle="modal" th:attr="data-target='#confirmDialog' + ${Author.id}">
                               Xóa
                             </button>
                             
@@ -88,7 +88,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form id="FormConfirm" onsubmit="confirmDelete()" th:action="@{/admin/author/delete/{id}(id=${Author.id})}"><button type="submit" id="ConfirmButtonDel" class="btn btn-danger">Xóa</button></form>
+                                    <form id="FormConfirm" onsubmit="confirmDelete()" th:action="@{/BookStore/admin/author/delete/{id}(id=${Author.id})}"><button type="submit" id="ConfirmButtonDel" class="btn btn-danger">Xóa</button></form>
                                     
                                   </div>
                                 </div>

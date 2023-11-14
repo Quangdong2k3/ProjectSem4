@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.StoreBook.repository.CategoryRepository;
 
 @Controller
-@RequestMapping(value="/admin/category_book")
+@RequestMapping(value="/BookStore/admin/category_book")
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;

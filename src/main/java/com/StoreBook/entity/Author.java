@@ -11,10 +11,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "AUTHORS")
 public class Author {
 	@Id

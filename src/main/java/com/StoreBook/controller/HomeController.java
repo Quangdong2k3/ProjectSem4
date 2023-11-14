@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 @Controller
-@RequestMapping("/BookStore")
+@RequestMapping("/BookStore/client")
 public class HomeController {
 
     @Autowired
