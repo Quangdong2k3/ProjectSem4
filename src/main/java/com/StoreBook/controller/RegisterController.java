@@ -2,9 +2,7 @@ package com.StoreBook.controller;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -55,14 +53,4 @@ public class RegisterController {
         
     }
 
-}
-class ErrorResponse{
-    
-    private String field;
-    private String message;
-    public ErrorResponse(String field, String message) {
-        this.field = field;
-        this.message = message;
-    }
-    
 }

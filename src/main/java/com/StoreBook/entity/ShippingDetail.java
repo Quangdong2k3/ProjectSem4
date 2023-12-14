@@ -1,18 +1,17 @@
 package com.StoreBook.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.*;
+
+import lombok.*;
+
 
 @Entity
 @Table(name = "ShippingDetails")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ShippingDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +19,12 @@ public class ShippingDetail {
 
 	private String address;
 	private String phone;
+	@Column(columnDefinition = "TEXT")
+	private String moreInfo;
+
 
 	@OneToOne
+	@JsonBackReference(value="ship-user")
 	@JoinColumn(name = "user_id")
 	private User user;
 }

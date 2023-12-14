@@ -59,9 +59,9 @@
 									<div id="imagePreview"></div>
 									<div class="form-group">
 
-										<select th:each="book:${booklst}" th:field="*{bookid}"  class="form-control" aria-label="Default select example">
+										<select  th:field="*{bookid}"  class="form-control" aria-label="Default select example">
 											<option th:value="0">Chọn tiêu đề</option>
-											<option th:value="${book.id}" th:text="${book.title}"></option>
+											<option th:each="book:${booklst}" th:value="${book.id}" th:text="${book.title}"></option>
 											
 										</select>
 										<label th:if="${#fields.hasErrors('bookid')}" th:errors="*{bookid}" class="text-danger"><label/>

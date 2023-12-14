@@ -1,34 +1,36 @@
 package com.StoreBook.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.*;
+
+import lombok.*;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Orders")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne(mappedBy = "order")
-	private OrderItem orderitem;
+
+	@OneToMany(mappedBy = "order")
+	@JsonManagedReference(value="order-orderItem")
+	private List<OrderItem> orderItem = new ArrayList<>();
 	private Date order_date;
 	private double total_amount;
 	private Integer status;
 
-	@OneToOne
+	@ManyToOne
+	@JsonBackReference(value="order-user")
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-
 
 }

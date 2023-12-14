@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin/index.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${titleName}"></title>
+</head>
+
+<body>
+  <div class="content-wrapper" layout:fragment="customer-content">
+    <div class="Rmessage"></div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0" th:text="${titleName}"></h1>
+          </div>
+          <!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard v1</li>
+            </ol>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <a th:href="@{/BookStore/admin/author/create}" class="btn btn-primary bg-navy mb-5">Thêm tác giả</a>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title" th:text="${title}">Danh sách các tác giả</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Khách hàng</th>
+                      <th>Bình luận</th>
+                      <th>Sản phẩm</th>
+                      <th>Trả lới</th>
+
+                      <th>Control</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+
+      <!-- Modal -->
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <div layout:fragment="script">
+    <script>
+      getAllReView();
+      function getAllReView() {
+        // alert($(".book_id").val())
+        $.ajax({
+          url: "http://localhost:8080/BookStore/api/review/getAllReview/", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data) {
+
+            $("tbody").empty();
+
+
+            data.forEach(function (data) {
+              var row = '<tr>'
+              const options = { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+              var date = new Date(data.created_at);
+              let formattedDate = date.toLocaleDateString('en-GB', options);
+              var btn = data.status == 0 ? '<button onclick="statusReview(' + data.id + ',1)" class="btn btn-info">Duyet</button>' : '<button onclick="statusReview(' + data.id + ',0)" class="btn btn-danger">Hủy duyệt</button>'
+
+              row += '<td>' + btn
+                + '</td>'
+              row += '<td>' + data.user.fullname + '</td>'
+              row += '<td>' + data.comment + '</td>'
+              row += '<td>' + data.book.title + '</td>'
+
+
+              var div = data.status == 1 && data.reply === null || data.reply == "" ? '<div class="form-group"><input id="reply' + data.id + '" type="text"  class="form-control"/><button onclick="replyReview(' + data.id + ')" class="btn btn-success">Trả lời</button> </div>' : data.reply
+              row += '<td>' + div + '</td>'
+              row += '<td><button onclick="deleteReview(' + data.id + ')" class="btn btn-danger">Xóa</button></td>'
+
+              row += '</tr>'
+              $('tbody').append(row);
+
+
+            });
+
+
+          },
+          error: function (response) {
+            console.log("Lỗi khi tải dữ liệu qua AJAX");
+          },
+        });
+
+      }
+      function replyReview(r_id) {
+        var sreply = 'reply' + r_id;
+        var rep = document.getElementById(sreply);
+        let object = {
+          id: r_id,
+          reply: rep.value,
+
+        }
+
+        $.ajax({
+          url: "http://localhost:8080/BookStore/api/review/reply_comment", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(object),
+          success: function (data) {
+            $(".Rmessage").html("Phản hồi thành công");
+
+            $('.Rmessage').fadeIn();
+            $(".Rmessage").addClass("alert alert-success")
+            setTimeout(() => {
+              $(".Rmessage").empty();
+              $(".Rmessage").removeClass("alert alert-success")
+
+
+            }, 5000);
+
+            getAllReView();
+
+          },
+          error: function (error) {
+            console.log(error.responseText);
+
+          },
+        });
+      }
+      function statusReview(r_id, status) {
+        let object = {
+          id: r_id,
+          status: status,
+        }
+
+        $.ajax({
+          url: "http://localhost:8080/BookStore/api/review/status_comment", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(object),
+          success: function (data) {
+            if (status == 0) {
+              $(".Rmessage").html("Hủy duyệt thành công");
+
+            }
+            if (status == 1) {
+              $(".Rmessage").html("Duyệt thành công");
+
+            }
+            $('.Rmessage').fadeIn();
+            $(".Rmessage").addClass("alert alert-success")
+            setTimeout(() => {
+              $(".Rmessage").empty();
+              $(".Rmessage").removeClass("alert alert-success")
+
+
+            }, 5000);
+
+            getAllReView();
+
+          },
+          error: function (error) {
+            console.log(error.responseText);
+            return false;
+
+          },
+        });
+      }
+      function deleteReview(r_id) {
+        let object = {
+          id: r_id,
+        }
+
+        var rs = confirm("Bạn có muốn xóa không");
+        if(rs){
+          $.ajax({
+          url: "http://localhost:8080/BookStore/api/review/delete_comment", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(object),
+          success: function (data) {
+              $(".Rmessage").html("Xóa bình luận thành công");
+
+
+            $('.Rmessage').fadeIn();
+            $(".Rmessage").addClass("alert alert-success")
+            setTimeout(() => {
+              $(".Rmessage").empty();
+              $(".Rmessage").removeClass("alert alert-success")
+
+
+            }, 5000);
+
+            getAllReView();
+
+          },
+          error: function (error) {
+            console.log(error.responseText);
+            return false;
+
+          },
+        });
+        }else{
+          return;
+        }
+        
+      }
+    </script>
+  </div>
+
+</body>
+
+</html>

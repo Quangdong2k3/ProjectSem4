@@ -30,11 +30,12 @@ function deleteCart(cart_id) {
   var rs = confirm("Are you sure you want to delete");
   if (rs) {
     $.ajax({
-      url: "http://localhost:8080/BookStore/api/Cart/remove/" + cart_id, // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+      url: "http://localhost:8080/BookStore/api/cart/remove/" + cart_id, // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
       type: "DELETE",
       success: function () {
-        getAllViewCart();
+       
         getAllCart();
+        // getAllViewCart();
       },
       error: function () {
         console.log("Lỗi khi tải dữ liệu qua AJAX");
@@ -50,9 +51,9 @@ function addCart(book_id, w_price, w_quantity) {
     // Thêm các thuộc tính khác tại đây
   };
   $.ajax({
-    url: "http://localhost:8080/BookStore/api/Cart/add", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+    url: "http://localhost:8080/BookStore/api/cart/add", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
     type: "POST",
-    contentType: "application/json",
+    contentType: "application/json;charset=UTF-8",
     data: JSON.stringify(itemToAdd),
     success: function (data) {
       alert("Thêm vào giỏ hàng thành công");
@@ -67,7 +68,7 @@ function addCart(book_id, w_price, w_quantity) {
 
 function getAllCart() {
   $.ajax({
-    url: "http://localhost:8080/BookStore/api/Cart/getAll", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+    url: "http://localhost:8080/BookStore/api/cart/getAll", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
     type: "GET",
     contentType: "application/json",
     dataType: "json",

@@ -7,12 +7,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
-
 
 @Entity
 @Table(name = "User")
@@ -30,25 +28,29 @@ public class User {
 	private String address;
 	private String phone;
 
+	@JsonManagedReference(value="cart-user")
 	@OneToMany(mappedBy = "user")
-	@JsonBackReference(value = "user-cart")
 	private List<Cart> cart = new ArrayList<>();
 
 	@OneToOne(mappedBy = "user")
+	@JsonManagedReference(value="ship-user")
 	private ShippingDetail shippingdetail;
 
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value="review-user")
 	List<Review> reviews = new ArrayList<>();
 
-	@OneToOne(mappedBy = "user")
-	private Order order;
-	
-    @JsonManagedReference(value = "user-roles")
+	@OneToMany(mappedBy = "user2")
+	@JsonManagedReference(value="reply-user")
+	List<Review> reply = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value="order-user")
+	private List<Order> orders = new ArrayList<>();
+
+
 	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<Role>();
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnoreProperties("users")
+	private Set<Role> roles = new HashSet<Role>();
 }

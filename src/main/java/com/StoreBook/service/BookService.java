@@ -3,8 +3,12 @@ package com.StoreBook.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +32,10 @@ public interface BookService {
 
     void delete(Long id);
 
-    BookDTO getById(Long id);
+    void AuthordeleteByBookid(Long bid);
 
+    BookDTO getById(Long id);
+Book getById1(Long id);
     List<Book> getAll();
 
     void addBookAuthor(BookAuthor bookauthor);
@@ -38,20 +44,21 @@ public interface BookService {
 @Transactional
 @Service
 class BookServiceImpl implements BookService {
-	private SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	private SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @Autowired
     BookRepository booksRepository;
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
     PublisherRepository publisherRepository;
+    @Autowired
+    AuthorService authorService;
 
     @Override
     public void add(BookDTO book) throws ParseException {
         // TODO Auto-generated method stub
         Book b = new Book();
-        
         b.setDescription(book.getDescription());
         Category c = categoryRepository.findById((long) book.getCategory_id()).get();
         b.setCategory(c);
@@ -61,12 +68,13 @@ class BookServiceImpl implements BookService {
         b.setQuantity(book.getQuantity());
         b.setPrice(book.getPrice());
         b.setImage(book.getImage());
-	        
-        
+        System.out.println(book.getAuthor_id());
+        // b.getAuthors().add(authorService.getById(book.getAuthor_id()));
+
         Date date = inputDateFormat.parse(book.getPublication_date());
         String outputDate = outputDateFormat.format(date);
         Date date1 = outputDateFormat.parse(outputDate);
-        
+
         b.setPublication_date(date1);
         booksRepository.save(b);
     }
@@ -74,8 +82,8 @@ class BookServiceImpl implements BookService {
     @Override
     public void update(Long id, BookDTO b) throws ParseException {
         // TODO Auto-generated method stub
-    	Book be = booksRepository.findById(id).get();
-    	
+        Book be = booksRepository.findById(id).get();
+
         if (id != 0) {
             be.setDescription(b.getDescription());
             be.setCategory(categoryRepository.findById(b.getCategory_id()).get());
@@ -88,6 +96,8 @@ class BookServiceImpl implements BookService {
             be.setPublication_date(date1);
             be.setQuantity(b.getQuantity());
             be.setTitle(b.getTitle());
+            be.getAuthors().add(authorService.getById(b.getAuthor_id()));
+
             booksRepository.save(be);
         }
     }
@@ -101,21 +111,21 @@ class BookServiceImpl implements BookService {
     @Override
     public BookDTO getById(Long id) {
         // TODO Auto-generated method stub
-    	Book b =booksRepository.findById(id).get();
-    	BookDTO dto = new BookDTO();
-    	dto.setId(b.getId());
-    	dto.setDescription(b.getDescription());
-    	dto.setImage(b.getImage());
-    	dto.setPrice(b.getPrice());
-    	
-    	SimpleDateFormat outputDate = new SimpleDateFormat("dd-MM-yyyy");
-    	
-    	String d1 = outputDate.format(b.getPublication_date());
-    	dto.setPublication_date(d1);
-    	dto.setPublisher_id(b.getPublisher().getId());
-    	dto.setTitle(b.getTitle());
-    	dto.setQuantity(b.getQuantity());
-    	dto.setCategory_id(b.getCategory().getId());
+        Book b = booksRepository.findById(id).get();
+        BookDTO dto = new BookDTO();
+        dto.setId(b.getId());
+        dto.setDescription(b.getDescription());
+        dto.setImage(b.getImage());
+        dto.setPrice(b.getPrice());
+
+        SimpleDateFormat outputDate = new SimpleDateFormat("dd-MM-yyyy");
+
+        String d1 = outputDate.format(b.getPublication_date());
+        dto.setPublication_date(d1);
+        dto.setPublisher_id(b.getPublisher().getId());
+        dto.setTitle(b.getTitle());
+        dto.setQuantity(b.getQuantity());
+        dto.setCategory_id(b.getCategory().getId());
         return dto;
     }
 
@@ -125,14 +135,12 @@ class BookServiceImpl implements BookService {
         return booksRepository.findAll();
     }
 
-    @Autowired
-    AuthorRepository authorRepository; 
     @Override
     public void addBookAuthor(BookAuthor bookauthor) {
         // TODO Auto-generated method stub
-        if (bookauthor!=null){
+        if (bookauthor != null) {
             // booksRepository
-            Author a = authorRepository.findById(bookauthor.getAuthorId()).get();
+            Author a = authorService.getById(bookauthor.getAuthorId());
             Book b = booksRepository.findById(bookauthor.getBookId()).get();
 
             b.getAuthors().add(a);
@@ -140,6 +148,27 @@ class BookServiceImpl implements BookService {
         }
     }
 
+    @Autowired
+    AuthorRepository authorRepository;
+@PersistenceContext
+    private EntityManager entityManager;
+    @Override
+    public void AuthordeleteByBookid(Long bid) {
+        // TODO Auto-generated method stube
+        Book b = booksRepository.findById(bid).get();
+          Set<Author> authors = new HashSet<>(b.getAuthors());
+        for (Author author : authors) {
+            b.getAuthors().remove(author);
+            author.getBooks().remove(b);
+        }
+        entityManager.flush();
 
+    }
+
+    @Override
+    public Book getById1(Long id) {
+        // TODO Auto-generated method stub
+        return booksRepository.findById(id).get();
+    }
 
 }

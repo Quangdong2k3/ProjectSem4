@@ -44,7 +44,7 @@ public class WishListController {
         return new ResponseEntity<>(w,HttpStatus.OK);
     }
     @DeleteMapping("mywishlist/remove/{id}")
-    public ResponseEntity deleteToWishList(@PathVariable int id) {
+    public ResponseEntity<?> deleteToWishList(@PathVariable int id) {
         // Thêm một mục vào danh sách mong muốn
     	
     	wishListService.removeItem(id);

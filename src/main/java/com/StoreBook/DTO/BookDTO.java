@@ -1,7 +1,6 @@
 package com.StoreBook.DTO;
 
 
-import java.util.Date;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -17,7 +16,7 @@ public class BookDTO {
 
 	@NotBlank(message="Tên sách không được trống")
 	private String title;
-	@NotBlank(message="Mô tả không được trống")
+	// @NotBlank(message="Mô tả không được trống")
 	private String description;
 	
 	@NotEmpty(message="Ảnh không được trống")
@@ -41,6 +40,7 @@ public class BookDTO {
 	
 	@Min(value =1, message = "Nhà xuất bản không được trống!")
 	private Long publisher_id;
-
+// @Min(value =1, message = "Nhà xuất bản không được trống!")
+	private Long author_id;
 
 }

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/layout.html}">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
+
 <body>
-    <section layout:fragment="client-body">
-        <!-- My Account Area Start -->
+	<section layout:fragment="client-body">
+
+		<!-- My Account Area Start -->
 		<div class="my-account-area section-padding">
 			<div class="container">
 				<div class="section-title2">
@@ -23,29 +27,32 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
 								<div class="panel panel-default">
 									<div class="panel-heading" role="tab" id="headingOne">
 										<h4 class="panel-title">
-											<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											<a role="button" data-toggle="collapse" data-parent="#accordion"
+												href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 												<i class="fa fa-building"></i>
-											   <span>Add my first address</span>
+												<span>Add my first address</span>
 											</a>
 										</h4>
 									</div>
-									<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+									<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+										aria-labelledby="headingOne">
 										<div class="panel-body">
 											<div class="coupon-info">
 												<h1 class="heading-title">Your addresses </h1>
-												<p class="coupon-text">To add a new address, please fill out the form below.</p>
+												<p class="coupon-text">To add a new address, please fill out the form
+													below.</p>
 												<p class="required">*Required field</p>
-												<form action="#">
+												<form action="#" th:object="${user}">
 													<p class="form-row">
-														<input type="text" placeholder="Your Full Name *">
+														<input type="text" readonly th:field="*{email}"
+															placeholder="Your Full Name *">
 													</p>
 													<p class="form-row">
-														<input type="text" placeholder="Address *">
+														<input type="text" th:field="*{address}"
+															placeholder="Address *">
 													</p>
-													<p class="form-row">
-														<input type="text" placeholder="City *" />
-													</p>
-													<div class="shop-select">
+
+													<!-- <div class="shop-select">
 														<label>Country <span class="required">*</span></label>
 														<select>
 															<option value="volvo">Bangladesh</option>
@@ -57,50 +64,99 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
 															<option value="audi4">Colombia</option>
 															<option value="audi5">Dominican Republic</option>
 														</select> 										
-													</div>	
+													</div>	 -->
 													<p class="form-row">
-														<input type="text" placeholder="Mobile phone *" />
+														<input type="text" th:field="*{phone}"
+															placeholder="Mobile phone *" />
 													</p>
-													<p class="required">** You must register at least one phone number.</p>
-													<p class="form-row order-notes">
+													<!-- <p class="required">** You must register at least one phone number.</p> -->
+													<!-- <p class="form-row order-notes">
 														<textarea placeholder="Additional information"></textarea>
-													</p>
-													<p class="form-row">
+													</p> -->
+													<!-- <p class="form-row">
 														<input type="text" placeholder="Please assign an address title for future reference. *" />
-													</p>
-													<a title="Save" class="btn button button-small" href="index.html">
+													</p> -->
+													<a title="Save" class="btn button button-small"
+														style="cursor: pointer;" onclick="saveUserInfo()">
 														<span>
-															  Save
+															Save
 															<i class="fa fa-chevron-right"></i>
 														</span>
 													</a>
 												</form>
-											</div>											
+											</div>
 										</div>
 									</div>
 								</div>
 								<div class="panel panel-default">
 									<div class="panel-heading" role="tab" id="headingTwo">
 										<h4 class="panel-title">
-											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+											<a class="collapsed" role="button" data-toggle="collapse"
+												data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+												aria-controls="collapseTwo">
 												<i class="fa fa-list-ol"></i>
-												<span>My credit slips</span>
+												<span>Shipping Details</span>
 											</a>
 										</h4>
 									</div>
-									<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+									<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+										aria-labelledby="headingTwo">
 										<div class="panel-body">
 											<div class="coupon-info">
-												<h1 class="heading-title">Order history </h1>
-												<p class="coupon-text">Here are the orders you've placed since your account was created.</p>
-												<div class="order-history">
-													<p class="alert">You have not placed any orders.</p>
-												</div>
+												<h1 class="heading-title">Shipping Details </h1>
+												<p class="coupon-text">To add a new address, please fill out the form
+													below.</p>
+												<p class="required">*Required field</p>
+												<form action="#" th:object="${shipping}">
+													<p class="form-row">
+														<input type="text" hidden th:field="*{id}" id="s_id"
+															placeholder="Your Full Name *">
+													</p>
+													<p class="form-row">
+														<input type="text" th:field="*{address}" id="s_address"
+															placeholder="Address *">
+													</p>
+
+													<!-- <div class="shop-select">
+														<label>Country <span class="required">*</span></label>
+														<select>
+															<option value="volvo">Bangladesh</option>
+															<option value="saab">Algeria</option>
+															<option value="mercedes">Afghanistan</option>
+															<option value="audi">Ghana</option>
+															<option value="audi2">Albania</option>
+															<option value="audi3">Bahrain</option>
+															<option value="audi4">Colombia</option>
+															<option value="audi5">Dominican Republic</option>
+														</select> 										
+													</div>	 -->
+													<p class="form-row">
+														<input type="text" th:field="*{phone}" id="s_phone"
+															placeholder="Mobile phone *" />
+													</p>
+													<p class="required">** You must register at least one phone number.
+													</p>
+													<p class="form-row order-notes">
+														<textarea th:field="*{moreInfo}" id="s_moreInfo"
+															placeholder="Additional information"></textarea>
+													</p>
+													<!-- <p class="form-row">
+														<input type="text" placeholder="Please assign an address title for future reference. *" />
+													</p> -->
+													<a title="Save" class="btn button button-small"
+														style="cursor: pointer;" onclick="saveShipping()">
+														<span>
+															Save
+															<i class="fa fa-chevron-right"></i>
+														</span>
+													</a>
+												</form>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="panel panel-default">
+							</div>
+							<!-- <div class="panel panel-default">
 									<div class="panel-heading" role="tab" id="headingThree">
 										<h4 class="panel-title">
 											<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -130,203 +186,446 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
 											</a>
 										</h4>
 									</div>
-									<div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-										<div class="panel-body">
-											<div class="coupon-info">
-												<h1 class="heading-title">Your personal information</h1>
-												<p class="coupon-text">Please be sure to update your personal information if it has changed.</p>
-												<p class="required">*Required field</p>
-												<form action="#">
-													<div class="form-row">
-														<label><span class="required">*</span>Social title</label>
-														<div class="radio-inline">
-															<label class="top">
-																<span class="checked">
-																	<input type="radio" /> 
-																</span>
-																Mr.
-															</label>
-														</div>
-														<div class="radio-inline">
-															<label class="top">
-																<span class="checked">
-																	<input type="radio" /> 
-																</span>
-																Mrs.
-															</label>
-														</div>
-													</div>
-													<p class="form-row">
-														<input type="text" placeholder="Your Full Name *" />
-													</p>
-													<p class="form-row">
-														<input type="text" placeholder="E-mail address" />
-													</p>
-													<div class="country-select shop-select">
-														<label>Date of Birth</label>
-														<div class="row">
-															<div class="col-xs-4">
-																<select>
-																	<option>1</option>
-																	<option>2</option>
-																	<option>3</option>
-																	<option>4</option>
-																	<option>5</option>
-																	<option>6</option>
-																	<option>7</option>
-																	<option>8</option>
-																	<option>9</option>
-																	<option>10</option>
-																	<option>11</option>
-																	<option>12</option>
-																	<option>13</option>
-																	<option>14</option>
-																	<option>15</option>
-																	<option>16</option>
-																	<option>17</option>
-																	<option>18</option>
-																	<option>19</option>
-																	<option>20</option>
-																	<option>21</option>
-																	<option>22</option>
-																	<option>23</option>
-																	<option>24</option>
-																	<option>25</option>
-																	<option>26</option>
-																	<option>27</option>
-																	<option>28</option>
-																	<option>29</option>
-																	<option>30</option>
-																</select> 																
-															</div>
-															<div class="col-xs-4">
-																<select>
-																	<option>January</option>
-																	<option>February </option>
-																	<option>March </option>
-																	<option>April </option>
-																	<option>May </option>
-																	<option>June </option>
-																	<option>July </option>
-																	<option>August </option>
-																	<option>September </option>
-																	<option>October </option>
-																	<option>November </option>
-																	<option>December </option>
-																</select> 																
-															</div>
-															<div class="col-xs-4">
-																<select>
-																	<option>1990</option>
-																	<option>1991</option>
-																	<option>1992</option>
-																	<option>1993</option>
-																	<option>1994</option>
-																	<option>1995</option>
-																	<option>1996</option>
-																	<option>1997</option>
-																	<option>1998</option>
-																	<option>1999</option>
-																	<option>2000</option>
-																	<option>2001</option>
-																	<option>2002</option>
-																	<option>2003</option>
-																	<option>2004</option>
-																	<option>2005</option>
-																	<option>2006</option>
-																	<option>2007</option>
-																	<option>2008</option>
-																	<option>2009</option>
-																	<option>2010</option>
-																	<option>2011</option>
-																	<option>2012</option>
-																	<option>2013</option>
-																	<option>2014</option>
-																	<option>2016</option>
-																	<option>2016</option>
-																	<option>2017</option>
-																	<option>2018</option>
-																	<option>2019</option>
-																	<option>2020</option>
-																</select> 																
-															</div>
-														</div>										
-													</div>
-													<p class="form-row">
-														<input type="text" placeholder="Current Password" />
-													</p>
-													<p class="form-row">
-														<input type="text" placeholder="New Password" />
-													</p>
-													<p class="form-row">
-														<input type="text" placeholder="Confirmation" />
-													</p>
-													<div class="checkbox">
-														<label>
-															<span><input type="checkbox" /></span>
-															Sign up for our newsletter!
+									
+								</div> -->
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-lg-6">
+						<div class="myaccount-link-list">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="collapsed" role="button" data-toggle="collapse"
+											data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+											aria-controls="collapseFour">
+											<i class="fa fa-heart"></i>
+											<span>My wishlists</span>
+										</a>
+									</h4>
+								</div>
+								<div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+									aria-labelledby="headingFour">
+									<div class="panel-body">
+										<div class="coupon-info">
+											<h1 class="heading-title">Your personal information</h1>
+											<p class="coupon-text">Please be sure to update your personal information if
+												it has changed.</p>
+											<p class="required">*Required field</p>
+											<form action="#">
+												<div class="form-row">
+													<label><span class="required">*</span>Social title</label>
+													<div class="radio-inline">
+														<label class="top">
+															<span class="checked">
+																<input type="radio" />
+															</span>
+															Mr.
 														</label>
 													</div>
-													<div class="checkbox">
-														<label>
-															<span><input type="checkbox" /></span>
-															Receive special offers from our partners!
+													<div class="radio-inline">
+														<label class="top">
+															<span class="checked">
+																<input type="radio" />
+															</span>
+															Mrs.
 														</label>
 													</div>
-													<a title="Save" class="btn button button-small" href="index.html">
-														<span>
-															  Save
-															<i class="fa fa-chevron-right"></i>
-														</span>
-													</a>
-												</form>
-											</div>
+												</div>
+												<p class="form-row">
+													<input type="text" placeholder="Your Full Name *" />
+												</p>
+												<p class="form-row">
+													<input type="text" placeholder="E-mail address" />
+												</p>
+												<div class="country-select shop-select">
+													<label>Date of Birth</label>
+													<div class="row">
+														<div class="col-xs-4">
+															<select>
+																<option>1</option>
+																<option>2</option>
+																<option>3</option>
+																<option>4</option>
+																<option>5</option>
+																<option>6</option>
+																<option>7</option>
+																<option>8</option>
+																<option>9</option>
+																<option>10</option>
+																<option>11</option>
+																<option>12</option>
+																<option>13</option>
+																<option>14</option>
+																<option>15</option>
+																<option>16</option>
+																<option>17</option>
+																<option>18</option>
+																<option>19</option>
+																<option>20</option>
+																<option>21</option>
+																<option>22</option>
+																<option>23</option>
+																<option>24</option>
+																<option>25</option>
+																<option>26</option>
+																<option>27</option>
+																<option>28</option>
+																<option>29</option>
+																<option>30</option>
+															</select>
+														</div>
+														<div class="col-xs-4">
+															<select>
+																<option>January</option>
+																<option>February </option>
+																<option>March </option>
+																<option>April </option>
+																<option>May </option>
+																<option>June </option>
+																<option>July </option>
+																<option>August </option>
+																<option>September </option>
+																<option>October </option>
+																<option>November </option>
+																<option>December </option>
+															</select>
+														</div>
+														<div class="col-xs-4">
+															<select>
+																<option>1990</option>
+																<option>1991</option>
+																<option>1992</option>
+																<option>1993</option>
+																<option>1994</option>
+																<option>1995</option>
+																<option>1996</option>
+																<option>1997</option>
+																<option>1998</option>
+																<option>1999</option>
+																<option>2000</option>
+																<option>2001</option>
+																<option>2002</option>
+																<option>2003</option>
+																<option>2004</option>
+																<option>2005</option>
+																<option>2006</option>
+																<option>2007</option>
+																<option>2008</option>
+																<option>2009</option>
+																<option>2010</option>
+																<option>2011</option>
+																<option>2012</option>
+																<option>2013</option>
+																<option>2014</option>
+																<option>2016</option>
+																<option>2016</option>
+																<option>2017</option>
+																<option>2018</option>
+																<option>2019</option>
+																<option>2020</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<p class="form-row">
+													<input type="text" placeholder="Current Password" />
+												</p>
+												<p class="form-row">
+													<input type="text" placeholder="New Password" />
+												</p>
+												<p class="form-row">
+													<input type="text" placeholder="Confirmation" />
+												</p>
+												<div class="checkbox">
+													<label>
+														<span><input type="checkbox" /></span>
+														Sign up for our newsletter!
+													</label>
+												</div>
+												<div class="checkbox">
+													<label>
+														<span><input type="checkbox" /></span>
+														Receive special offers from our partners!
+													</label>
+												</div>
+												<a title="Save" class="btn button button-small" href="index.html">
+													<span>
+														Save
+														<i class="fa fa-chevron-right"></i>
+													</span>
+												</a>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-lg-6">
-							<div class="myaccount-link-list">								
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a  href="wishlist.html">
-												<i class="fa fa-heart"></i>
-												<span>My wishlists</span>
-											</a>
-										</h4>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a  href="cart.html">
-												<i class="fa fa-list-ol"></i>
-												<span>Order history and details</span>
-											</a>
-										</h4>
-									</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a href="cart.html">
+											<i class="fa fa-list-ol"></i>
+											<span>Order history and details</span>
+										</a>
+									</h4>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="create-account-button pull-left">
-							<a href="index.html" class="btn button button-small" title="Home">
-								<span>
-									<i class="fa fa-chevron-left"></i>
-									  Home
-								</span>
-							</a>
+			</div>
+			<div class="container">
+				<div class="col-md-9">
+					<div class="p-details-tab-content">
+						<div class="p-details-tab">
+							<ul class="p-details-nav-tab" role="tablist">
+								<li role="presentation" class="active"><a href="#more-info" aria-controls="more-info"
+										role="tab" data-toggle="tab" aria-expanded="true">Description</a></li>
+								<li role="presentation" class=""><a href="#data" aria-controls="data" role="tab"
+										data-toggle="tab" aria-expanded="false">Đơn đặt hàng</a></li>
+										<li role="presentation" class=""><a href="#distroy-order" aria-controls="istroy-order" role="tab"
+											data-toggle="tab" aria-expanded="false">Các đơn hàng</a></li>
+								<li role="presentation" class=""><a href="#reviews" aria-controls="reviews" role="tab"
+										data-toggle="tab" aria-expanded="false">Các mặt hàng đã mua hàng</a></li>
+
+							</ul>
+						</div>
+						<div class="clearfix"></div>
+						<div class="tab-content review">
+							<div role="tabpanel" class="tab-pane active" id="more-info">
+								<p>Nếu tìm kiếm trên Google những cuốn sách tài chính kinh điển mà mọi nhà đầu tư nên
+									đọc, bạn sẽ thấy cái tên Lạc Quan Tếu (Irrational Exuberance) của giáo sư kinh tế
+									học Robert Shiller xuất hiện ở nhiều danh sách uy tín khác nhau.
+
+									Và khi Robert Shiller cảnh báo bong bóng đang nổi lên khắp nơi trên thị trường, mọi
+									người đều phải thận trọng lắng nghe.
+
+									Nếu như tương lai của bạn phụ thuộc vào tài khoản hưu trí, nhà ở, chứng khoán hoặc
+									bất cứ khoản đầu tư nào khác, cuốn sách Lạc Quan Tếu của Robert Shiller là tài liệu
+									bạn bắt buộc phải nghiên cứu thật kỹ lưỡng.</p>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="data">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>Ngày đặt</h5>
+									</div>
+									<div class="col-md-3">
+										<h5>Tổng tiền</h5>
+									</div>
+									<div class="col-md-3">
+										<h5>Trạng thái</h5>
+									</div>
+								</div>
+								<div class="row" style="margin-bottom: 10px;" th:each="items,index :${order}">
+									<div class="col-md-3">
+										<p th:text=${items.order_date}>Ngày đặt</p>
+									</div>
+									<div class="col-md-3">
+										<p
+											th:text="${#numbers.formatDecimal(items.total_amount,3,'POINT',0,'COMMA')}+'đ'">
+										</p>
+									</div>
+									<div class="col-md-3">
+										<th:block th:if="${items.status>1 and items.status < 4 }">
+											<button type="submit" class="btn btn-primary">Đơn hàng đang vận chuyển</button>
+										</th:block>
+										<th:block th:if="${items.status==1}">
+											<button type="submit" class="btn btn-primary">Hủy đơn hàng</button>
+										</th:block>
+										<th:block th:if="${items.status==5}">
+											<button type="submit" class="btn btn-primary">Bạn có thể đánh giá</button>
+										</th:block>
+										<th:block th:if="${items.status==4}">
+											<form method="post" th:action="@{/BookStore/client/order-update-status/{order_id}(order_id=${items.id})}">
+												<input type="text" name="status" value="5" hidden style="visibility: hidden;display: none;">
+												<button type="submit" class="btn btn-primary">Đã nhận hàng</button>
+
+											</form>
+										</th:block>
+										<th:block th:if="${items.status==0}">
+											<button type="submit" class="btn btn-primary">Đơn hàng đã hủy</button>
+										</th:block>
+									</div>
+									<div class="row" style="margin-bottom: 20px;">
+										<div class="col-xs-12 col-sm-6 col-lg-12">
+											<div class="myaccount-link-list">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h4 class="panel-title">
+															<a class="collapsed w-25" role="button" data-toggle="collapse"
+																data-parent="#accordion" th:href="@{'#collapseFour'}+${items.id}"
+																aria-expanded="false"  th:attr="aria-controls='collapseFour1'+${items.id}" >
+																<i class="fa fa-heart"></i>
+																<span>Xem chi tiết</span>
+															</a>
+														</h4>
+													</div>
+													<div th:id="'collapseFour'+${items.id}" class="panel-collapse collapse" role="tabpanel"
+													th:attr="aria-labelledby='headingFour'+${items.id}">
+													<div class="panel-body">
+														<div class="coupon-info">
+															<table class="table-data-sheet">
+																<thead>
+																	<th>Sách</th>
+																	<th>Giá</th>		
+																	<th>Ảnh</th>
+																	<th>Số lượng</th>		
+																</thead>
+																<tbody>
+																	<tr th:each="i:${items.orderItem}" class="odd">
+																	<td th:text="${i.book.title}">Sách</td>
+																	<td th:text="${i.price}">Giá</td>		
+																	<td ><img width="50px" th:src="'/images/'+${i.book.image}" alt=""></td>
+																	<td th:text="${i.quantity}">Số lượng</td>	
+																	
+																	</tr>	
+																	
+																</tbody>
+															</table>
+															</div>
+													</div>
+
+													
+												</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="distroy-order">
+								<p>Nếu tìm kiếm trên Google những cuốn sách tài chính kinh điển mà mọi nhà đầu tư nên
+									đọc, bạn sẽ thấy cái tên Lạc Quan Tếu (Irrational Exuberance) của giáo sư kinh tế
+									học Robert Shiller xuất hiện ở nhiều danh sách uy tín khác nhau.
+
+									Và khi Robert Shiller cảnh báo bong bóng đang nổi lên khắp nơi trên thị trường, mọi
+									người đều phải thận trọng lắng nghe.
+
+									Nếu như tương lai của bạn phụ thuộc vào tài khoản hưu trí, nhà ở, chứng khoán hoặc
+									bất cứ khoản đầu tư nào khác, cuốn sách Lạc Quan Tếu của Robert Shiller là tài liệu
+									bạn bắt buộc phải nghiên cứu thật kỹ lưỡng.</p>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="reviews">
+								<table class="table-data-sheet">
+									<thead>
+										<th>Sách</th>
+										<th>Giá</th>
+										<th>Ảnh</th>
+
+										<th>Số lượng</th>
+
+										<th>Trạng thái</th>
+
+
+
+									</thead>
+									<tbody>
+										<tr class="odd" th:each="items :${orderItem}">
+											<td th:text="${items.title}"></td>
+											<td
+												th:text="${#numbers.formatDecimal(items.price,3,'POINT',0,'COMMA')}+'đ'">
+												Bristol
+											</td>
+
+											<td>
+												<img width="50px" th:src="@{'/images/'+${items.image}}" alt=""
+													srcset="">
+											</td>
+											<td >1</td>
+											<td>
+												<button class="btn btn-primary" type="submit"
+													th:onclick="addCart([[${items.id}]],[[${items.price}]],1)">Mua
+													lại</button>
+
+											</td>
+
+
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="create-account-button pull-left">
+						<a href="/BookStore/client" class="btn button button-small" title="Home">
+							<span>
+								<i class="fa fa-chevron-left"></i>
+								Home
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
 		</div>
 		<!-- My Account Area End -->
-    </section>
+	</section>
+
+	<div layout:fragment="script">
+		<script>
+			function saveShipping() {
+				let userData = {
+					s_id: $('#s_id').val(),
+					s_address: $('#s_address').val(),
+
+					s_phone: $('#s_phone').val(),
+					s_moreInfo: $('#s_moreInfo').val(),
+				}
+				$.ajax({
+					type: 'PUT',
+					contentType: 'application/json',
+					url: '/BookStore/client/account/editShipping',
+					data: JSON.stringify(userData),
+					success: function (response) {
+						alert("Cập nhật thành công"); // Hiển thị thông báo thành công
+					},
+					error: function (xhr) {
+
+
+						console.log('Lỗi')
+
+
+					}
+				});
+				return false;
+			}
+			function saveUserInfo() {
+				let userData = {
+					address: $('#address').val(),
+
+					phone: $('#phone').val(),
+
+
+				}
+				$.ajax({
+					type: 'PUT',
+					contentType: 'application/json',
+					url: '/BookStore/client/account/editUserInfo',
+					data: JSON.stringify(userData),
+					success: function (response) {
+						alert("Cập nhật thành công"); // Hiển thị thông báo thành công
+					},
+					error: function (xhr) {
+
+
+						console.log('Lỗi')
+
+
+					}
+				});
+				return false;
+			}
+		</script>
+	</div>
 </body>
+
 </html>

@@ -79,8 +79,8 @@
                         <tr th:each="p : ${list}">
                             <td th:text="${p.id}"></td>
                             <td th:text="${p.title}"></td>
-                            <td><img  class="w-75" th:src="@{'/images/'+	${p.image}}"/></td>
-                            <td th:text="${p.price}"></td>
+                            <td><img  class="w-25" th:src="@{'/images/'+	${p.image}}"/></td>
+                            <td th:text="${#numbers.formatDecimal(p.price,3,'POINT',0,'COMMA')}+'đ'"></td>
                             <td th:text="${p.quantity}"></td>
                             <td th:text="${p.getCategory().name}"></td>
                             <td th:text="${p.getPublisher().name}"></td>

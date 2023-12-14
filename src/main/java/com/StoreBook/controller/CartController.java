@@ -1,13 +1,18 @@
 package com.StoreBook.controller;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +20,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.StoreBook.DTO.CartDTO;
+import com.StoreBook.DTO.CustomerDTO;
 import com.StoreBook.entity.Book;
 import com.StoreBook.entity.Cart;
 import com.StoreBook.entity.User;
 import com.StoreBook.repository.BookRepository;
 import com.StoreBook.repository.CartRepository;
 import com.StoreBook.repository.UserRepository;
+import com.StoreBook.service.CartService;
+import com.StoreBook.service.CustomOAuth2User;
 import com.StoreBook.service.MyRole;
+import com.StoreBook.service.UserService;
+
 
 @RestController
-@RequestMapping(value = "/BookStore/api/Cart")
+@RequestMapping(value = "/BookStore/api/cart")
 public class CartController {
 
     @Autowired
@@ -37,21 +48,75 @@ public class CartController {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    UserService userService;
+    // private void printOAuth2UserAttributes(OAuth2User oAuth2User) {
+    // Map<String, Object> attributes = oAuth2User.getAttributes();
+
+    // System.out.println("OAuth2User Attributes:");
+    // for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+    // System.out.println(entry.getKey() + ": " + entry.getValue());
+    // }
+    // }
     public Long getUserID() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            if (userDetails instanceof MyRole) {
-                return ((MyRole) userDetails).getId();
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long so = 0L;
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
+                MyRole myRoleUser = (MyRole) userDetails;
+                User u1 = userService.findByEmail(myRoleUser.getUsername());
+                so = u1.getId();
+            }
+            if (principal instanceof OAuth2User) {
+                OAuth2User oAuth2User = (OAuth2User) principal;
+                CustomOAuth2User customOAuth2User = (CustomOAuth2User) oAuth2User;
+                User u2 = userService.findByEmail(customOAuth2User.getEmail());
+                so = u2.getId();
             }
         }
-        return null;
+            return so;
+
+        // Trả về một giá trị mặc định hoặc null tùy thuộc vào yêu cầu của bạn
     }
 
+    @GetMapping("user")
+    public String getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String so = "";
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
+
+                MyRole myRoleUser = (MyRole) userDetails;
+                // User u = userService.findByEmail(myRoleUser.getUsername());
+                so = myRoleUser.getId().toString();
+            }
+            if (principal instanceof OAuth2User) {
+                OAuth2User oAuth2User = (OAuth2User) principal;
+                CustomOAuth2User customOAuth2User = (CustomOAuth2User) oAuth2User;
+                User u = userService.findByEmail(customOAuth2User.getEmail());
+                so = u.getId().toString();
+            }
+        }
+            return so;
+
+    }
+
+    @GetMapping("Prinuser")
+    public Principal user(Principal principal) {
+        return principal;
+    }
+
+    @Autowired
+    private CartService cartService;
     @GetMapping(value = "getAll")
-    public ResponseEntity<List<Cart>> getAllCart() {
-        System.out.println(getUserID());
-        return new ResponseEntity<List<Cart>>(cartRepository.findByUser_Id(getUserID()), HttpStatus.OK);
+    public ResponseEntity<List<CartDTO>> getAllCart() {
+
+        return new ResponseEntity<List<CartDTO>>(cartService.getCartAll(getUserID()),HttpStatus.OK) ;
     }
 
     @PostMapping(value = "add")

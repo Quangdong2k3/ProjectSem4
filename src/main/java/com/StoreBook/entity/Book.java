@@ -38,35 +38,38 @@ public class Book {
 
 	private double average_rating;
 
-	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "BOOKS_Authors", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-	private Set<Author> authors = new HashSet<>();
+	@JoinTable(name = "BOOKS_Authors", joinColumns = @JoinColumn(name = "book_id"), 
+	inverseJoinColumns = @JoinColumn(name = "author_id"))
+	@JsonIgnoreProperties("books")
+	private Set<Author> authors;
 
-	@JsonBackReference(value = "book-cate")
 	@ManyToOne
+	@JsonBackReference(value="book-category")
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@JsonBackReference(value = "book-publisher")
 	@ManyToOne
-
+	@JsonBackReference(value="book-publisher")
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
 
-	@JsonIgnore
+
 	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value="book-review")
 	private List<Review> review = new ArrayList<>();
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value="book-orderItem")
 	private List<OrderItem> orderItem = new ArrayList<>();
 
 	@OneToMany(mappedBy = "book")
-	@JsonBackReference(value = "cart-book")
+	@JsonManagedReference(value="book-cart")
 	private List<Cart> carts = new ArrayList<>();
 
+
 	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value="book-img")
 	List<Image> img = new ArrayList<>();
 
 }

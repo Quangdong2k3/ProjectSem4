@@ -2,48 +2,49 @@
 <html  lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head th:fragment="headers">
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
-        <title th:text="${titlePage}"></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- favicon -->
-        <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/favicon.ico}">
-        <!-- Place favicon.ico in the root directory -->
-        <!-- Google Fonts -->
-		<link th:href="@{'https://fonts.googleapis.com/css?family=Poppins:400,700,600,500,300'}" rel='stylesheet' type='text/css'>
-		<!-- all css here -->
-		<!-- bootstrap v3.3.6 css -->
-        <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
-		<!-- animate css -->
-        <link rel="stylesheet" th:href="@{/user/css/animate.css}">
-		<!-- jquery-ui.min css -->
-        <link rel="stylesheet" th:href="@{/user/css/jquery-ui.min.css}">
-		<!-- meanmenu css -->
-        <link rel="stylesheet" th:href="@{/user/css/meanmenu.min.css}">
-		<!-- Font-Awesome css -->
-        <link rel="stylesheet" th:href="@{/user/css/font-awesome.min.css}">
-		<!-- pe-icon-7-stroke css -->
-        <link rel="stylesheet" th:href="@{/user/css/pe-icon-7-stroke.css}">
-		<!-- Flaticon css -->
-        <link rel="stylesheet" th:href="@{/user/css/flaticon.css}">
-		<!-- venobox css -->
-        <link rel="stylesheet" th:href="@{/user/venobox/venobox.css}" type="text/css" media="screen" />
-		<!-- nivo slider css -->
-		<link rel="stylesheet" th:href="@{/user/lib/css/nivo-slider.css}" type="text/css" />
-		<link rel="stylesheet" th:href="@{/user/lib/css/preview.css}" type="text/css" media="screen" />
-		<!-- owl.carousel css -->
-        <link rel="stylesheet" th:href="@{/user/css/owl.carousel.css}">
-		<!-- style css -->
-		<link rel="stylesheet" th:href="@{/user/style.css}">
-		<!-- responsive css -->
-        <link rel="stylesheet" th:href="@{/user/css/responsive.css}">
-		<!-- modernizr css -->
-        <script th:src="@{/user/js/vendor/modernizr-2.8.3.min.js}"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Bookstore</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/user/img/favicon.ico">
+    <!-- Place favicon.ico in the root directory -->
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins:400,700,600,500,300' rel='stylesheet' type='text/css'>
+    <!-- all css here -->
+    <!-- bootstrap v3.3.6 css -->
+    <link rel="stylesheet" href="/user/css/bootstrap.min.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="/user/css/animate.css">
+    <!-- jquery-ui.min css -->
+    <link rel="stylesheet" href="/user/css/jquery-ui.min.css">
+    <!-- meanmenu css -->
+    <link rel="stylesheet" href="/user/css/meanmenu.min.css">
+    <!-- Font-Awesome css -->
+    <link rel="stylesheet" href="/user/css/font-awesome.min.css">
+    <!-- pe-icon-7-stroke css -->
+    <link rel="stylesheet" href="/user/css/pe-icon-7-stroke.css">
+    <!-- Flaticon css -->
+    <link rel="stylesheet" href="/user/css/flaticon.css">
+    <!-- venobox css -->
+    <link rel="stylesheet" href="/user/venobox/venobox.css" type="text/css" media="screen" />
+    <!-- nivo slider css -->
+    <link rel="stylesheet" href="/user/lib/css/nivo-slider.css" type="text/css" />
+    <link rel="stylesheet" href="/user/lib/css/preview.css" type="text/css" media="screen" />
+    <!-- owl.carousel css -->
+    <link rel="stylesheet" href="/user/css/owl.carousel.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="/user/style.css">
+    <!-- responsive css -->
+    <link rel="stylesheet" href="/user/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="/user/js/vendor/modernizr-2.8.3.min.js"></script>
         
     </head>
 <body>
-    <div th:fragment="client-menu" class="header-area">
+    <article th:fragment="client-menu">
+    <div class="header-area">
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-sm-6 col-xs-6" style="height: 90px;">
@@ -57,7 +58,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                     <div class="header-right">
                         <ul>
                             <li>
-                                <a href="account.html"><i class="flaticon-people"></i></a>
+                                <a th:href="@{http://localhost:8080/BookStore/client/myAccount}"><i class="flaticon-people"></i></a>
                             </li>
                             <li class="shoping-cart">
                                 <a href="#">
@@ -86,13 +87,13 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                         <li><a href="checkout.html">Check Out</a></li>
                                         <li><a href="contact.html">Contact</a></li>
                                         <li><a href="/login">Login</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
+                                        <li><a href="/BookStore/client/myAccount">My Account</a></li>
                                         <li><a href="/BookStore/client/shop">Shopping Page</a></li>
                                         <li><a href="single-product.html">Single Shop Page</a></li>
                                         <li><a href="wishlist.html">Wishlist Page</a></li>
                                         <li><a href="404.html">404 Page</a></li>
                                         <div sec:authorize="isAuthenticated()">
-                                            <li> <a href="/dologout">Logout</a></li>
+                                            <li> <a href="/logout">Logout</a></li>
                                         </div>
                                     </ul>
                                 </li>
@@ -105,7 +106,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                     <div class="header-right">
                         <ul>
                             <li>
-                                <a href="account.html"><i class="flaticon-people"></i></a>
+                                <a href="/BookStore/client/myAccount"><i class="flaticon-people"></i></a>
                             </li>
                             <li class="shoping-cart">
                                 <div sec:authorize="!isAuthenticated()">
@@ -121,60 +122,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                     </a>
                                 </div>
                                 <div class="add-to-cart-product">
-                                    <div class="cart-product">
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img th:src="@{'/user/img/shop/1.jpg'}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">Đắc nhân tâm</a>
-                                            </p>
-                                            <a href="single-product.html">Mới</a>
-                                            <span class="cart-price"> 120.000đ</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </div>
-                                    <div class="cart-product"> 
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img th:src="@{'/user/img/shop/2.jpg'}" alt="">
-                                            </a>
-                                        </div> 
-                                         <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">Thất tịnh không mưa</a>
-                                            </p>
-                                            <a href="single-product.html">Cũ</a>
-                                            <span class="cart-price"> 65.000đ</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </div>
-                                    <div class="total-cart-price">
-                                        <div class="cart-product-line fast-line">
-                                            <span>Phí Ship</span>
-                                            <span class="free-shiping"> 25.000đ</span>
-                                        </div>
-                                        <div class="cart-product-line">
-                                            <span>Thanh toán</span>
-                                            <span class="total"> 210.000đ</span>
-                                        </div>
-                                    </div>
-                                    <div class="cart-checkout">
-                                        <a href="checkout.html">
-                                            Check out
-                                            <i class="fa fa-chevron-right"></i>
-                                        </a>
-                                    </div>  
+                                    
+                                     
                                 </div>
                             </li>
                         </ul>
@@ -182,7 +131,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                 </div>
             </div>
         </div>
-    </div>
+    </div></article>
     <section th:fragment="client-breadcums">
         <div class="breadcrumbs-area">
 			<div class="container">
@@ -221,7 +170,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <li><a href="checkout.html">Check Out</a></li>
                                             <li><a href="contact.html">Contact</a></li>
                                             <li><a href="/login">Login</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
+                                            <li><a href="/BookStore/client/myAccount">My Account</a></li>
                                             <li><a href="shop.html">Shopping Page</a></li>
                                             <li><a href="single-product.html">Single Shop Page</a></li>
                                             <li><a href="wishlist.html">Wishlist Page</a></li>

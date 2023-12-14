@@ -29,7 +29,7 @@ public class Publisher {
 
 	private String website;
 
-	@JsonManagedReference(value = "book-publisher")
 	@OneToMany(mappedBy = "publisher")
+	@JsonManagedReference(value="book-publisher")
 	List<Book> books = new ArrayList<>();
 }

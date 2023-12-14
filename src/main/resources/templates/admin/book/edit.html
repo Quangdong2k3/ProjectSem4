@@ -60,9 +60,11 @@
 									<div class="form-group">
 										<label>Mô tả</label>
 										
-										<textarea  class="form-control" th:field="*{description}" rows="8"></textarea>
-										<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-											class="text-danger"></span>
+										<textarea id="summernote" th:field="*{description}">
+											
+										  </textarea>
+										<!-- <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+											class="text-danger"></span> -->
 									</div>
 									<div class="form-group">
 										<label>Giá</label>
@@ -106,8 +108,19 @@
 											class="text-danger"></span>
 									</div>
 									<div class="form-group">
+										<label>Tác giả: </label>
+										<select th:field="*{author_id}" 
+											class="form-control" aria-label="Default select example">
+											<option th:value="0" selected>Chọn Tác giả</option>
+											<option th:each="a : ${author}" th:value="${a.id}" th:text="${a.name}"></option>
+										</select>
+
+										<span th:if="${#fields.hasErrors('author_id')}" th:errors="*{author_id}"
+											class="text-danger"></span>
+									</div>
+									<div class="form-group">
 										<label>Ngày xuất bản</label>
-										<input type="datetime-local" class="form-control flatpickr-input" th:field="*{publication_date}"
+										<input  class="form-control flatpickr-input" th:field="*{publication_date}"
 											id="yourDatePicker" placeholder="Chọn ngày tháng" data-locale="vi"/>
 										<span th:if="${#fields.hasErrors('publication_date')}"
 											th:errors="*{publication_date}" class="text-danger"></span>
@@ -141,6 +154,32 @@
 			<!-- /.container-fluid -->
 		</section>
 		<!-- /.content -->
+		
+	</div>
+	<div layout:fragment="script">
+		
+		<script>
+
+			flatpickr("#yourDatePicker", {
+			  enableTime: true,
+			  dateFormat: "d-m-Y",
+			  maxDate: "today",
+			  locale: "vn",
+			});
+	  
+		  </script>
+		<script>
+			$(function () {
+			  // Summernote
+			  $('#summernote').summernote()
+		  
+			  // CodeMirror
+			//   CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+			// 	mode: "htmlmixed",
+			// 	theme: "monokai"
+			//   });
+			})
+		  </script>
 	</div>
 </body>
 

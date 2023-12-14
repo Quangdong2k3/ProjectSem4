@@ -9,4 +9,5 @@ import com.StoreBook.entity.Cart;
 public interface CartRepository extends JpaRepository<Cart,Long>{
     List<Cart> findByUser_Id(Long userId);
     Cart findByUser_IdAndBook_Id(Long userId,Long bookId);
+    void deleteAllByUserId(Long userId);
 }

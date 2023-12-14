@@ -1,7 +1,5 @@
 package com.StoreBook.entity;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +9,9 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Table(name = "CARTS")
@@ -23,6 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,17 +28,13 @@ public class Cart {
 	private Integer quantity;
 	private double price;
 
-	@ManyToOne	
-	@JoinColumn(name = "user_id")
-	@JsonManagedReference
-	private User user;
-	
-	
-	
-	
 	@ManyToOne
+	@JsonBackReference(value="cart-user")
+	@JoinColumn(name = "user_id")
+	private User user;
 
-	@JsonManagedReference(value = "cart-book")
+	@ManyToOne
+	@JsonBackReference(value="book-cart")
 	@JoinColumn(name = "Book_id")
 	private Book book;
 }

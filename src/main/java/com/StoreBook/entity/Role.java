@@ -1,5 +1,6 @@
 package com.StoreBook.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,8 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.*;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +34,10 @@ import lombok.Setter;
     private String name;
     
 
-    @JsonBackReference(value = "user-roles")
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnoreProperties("roles")
     Set<User> users = new HashSet<>();
+
+    
+
 }

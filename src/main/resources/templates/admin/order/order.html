@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/index.html}"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titleName}"></title>
+</head>
+<body>
+    <div class="content-wrapper" layout:fragment="customer-content">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0" th:text="${titleName}"></h1>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Dashboard v1</li>
+                </ol>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        
+        <!-- Main content -->
+        <section class="content">
+			<th:block th:if="${message}">
+        <p th:text="${message}" class="alert alert-success">This is where the message will appear.</p>
+    </th:block>
+      <div class="container-fluid">
+        <a th:href="@{/BookStore/admin/book/create}" class="btn btn-primary bg-navy mb-5">Thêm sách</a>
+        <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Danh sách đặt hàng</h3>
+  
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+  
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                 
+   
+
+
+                <div class="card-body table-responsive p-0" style="height: 500px;">
+                  <table class="table table-head-fixed text-nowrap table-striped">
+                    <thead>
+                      <tr>
+                        <th>Thời gian</th>
+                        <th>Tổng tiền</th>
+                        <th colspan="3">Thông tin khách hàng</th>
+                        
+                        <th>Trạng thái</th>
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr th:each="o : ${order}">
+                            <td th:text="${o.order_date}"></td>
+                           
+                            <td th:text="${#numbers.formatDecimal(o.total_amount,3,'POINT',0,'COMMA')}+'đ'"></td>
+                            <td th:text="${o.user.fullname}"></td>
+                            <td th:text="${o.user.address}"></td>
+
+                            <td th:text="${o.user.phone}"></td>
+                            <td>
+                              <a th:href="@{/BookStore/admin/invoice/{user_id}/order/{order_id} (user_id=${o.user.id},order_id=${o.id})}"  class="btn bg-navy color-palette
+                              ">Xem chi tiết</a>
+                              <div th:if="${o.status>=1}">
+                                <th:block th:if="${o.status==1}">
+                                <p class="text-default">Đang chờ duyệt</p>
+                                </th:block>
+                                <th:block th:if="${o.status==2}">
+                                <p class="text-default">Đóng hàng</p>
+                                </th:block>
+                                <th:block th:if="${o.status==3}">
+                                <p class="text-default">Chờ giao hàng</p>
+                                </th:block>
+                                <th:block th:if="${o.status==4}">
+                                <p class="text-default">Hoàn thành</p>
+                                </th:block>
+                                <th:block th:if="${o.status==5}">
+                                <p class="text-default">Đã nhận được hàng</p>
+                                </th:block>
+<!--  Xong hết  -->
+                                <th:block th:if="${o.status!=5}">
+                                  <form th:action="@{/BookStore/admin/order/{order_id}/update-status(order_id=${o.id})}" method="post">
+                                    <select name="status" id="" class="form-control">
+                                      <option value="null">Chọn</option>
+                                      <option th:selected="${o.status}==0"  value="0">Hủy đơn hàng</option>
+  
+                                      <option th:selected="${o.status}==1"  value="1">Duyệt đơn hàng</option>
+                                      <option th:selected="${o.status}==2"  value="2">Đóng hàng</option>
+                                      <option th:selected="${o.status}==3"  value="3">Giao hàng</option>
+                                      <option th:selected="${o.status}==4"  value="4">Xong</option>
+  
+  
+  
+                                    </select>
+                                    <button type="submit" class="btn bg-indigo color-palette">Xác nhận đơn hàng</button>
+                                </form>
+                                </th:block>
+                                
+
+                              </div>
+                              
+
+                          </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        <!-- /.row -->
+      </div>
+      
+      <!-- Modal -->
+      <!-- /.container-fluid -->
+    </section>
+        <!-- /.content -->
+      </div>
+      
+</body>
+</html>

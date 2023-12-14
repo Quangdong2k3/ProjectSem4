@@ -21,8 +21,7 @@ public class ImageService {
 
     @Autowired
     private ImageRepository imageRepository;
-    @Autowired
-    private BookService bookService;
+
     
 @Autowired
 BookRepository bookRepository;
@@ -32,9 +31,9 @@ BookRepository bookRepository;
                 String originalFilename = file.getOriginalFilename();
                 String filePath = Paths.get(uploadPath, originalFilename).toString();
                 
-                if (!imageRepository.existsByImgone(originalFilename) && !imageRepository.existsByImgtwo(originalFilename) && 
-                    !imageRepository.existsByImgthree(originalFilename) && !imageRepository.existsByImgfour(originalFilename) && 
-                    !imageRepository.existsByImgfive(originalFilename)) {
+                if (!imageRepository.existsByImg1(originalFilename) && !imageRepository.existsByImg2(originalFilename) && 
+                    !imageRepository.existsByImg3(originalFilename) && !imageRepository.existsByImg4(originalFilename) && 
+                    !imageRepository.existsByImg5(originalFilename)) {
                     
                     try {
                         Files.write(Paths.get(filePath), file.getBytes());
@@ -43,16 +42,16 @@ BookRepository bookRepository;
                         Image image = new Image();
                         image.setBook(bookRepository.findById(bookId).get()); // Get the associated book entity
                         
-                        if (image.getImgone() == null) {
-                            image.setImgone(originalFilename);
-                        } else if (image.getImgtwo() == null) {
-                            image.setImgtwo(originalFilename);
-                        } else if (image.getImgthree() == null) {
-                            image.setImgthree(originalFilename);
-                        } else if (image.getImgfour() == null) {
-                            image.setImgfour(originalFilename);
-                        } else if (image.getImgfive() == null) {
-                            image.setImgfive(originalFilename);
+                        if (image.getImg1() == null) {
+                            image.setImg1(originalFilename);
+                        } else if (image.getImg2() == null) {
+                            image.setImg2(originalFilename);
+                        } else if (image.getImg3() == null) {
+                            image.setImg3(originalFilename);
+                        } else if (image.getImg4() == null) {
+                            image.setImg4(originalFilename);
+                        } else if (image.getImg5() == null) {
+                            image.setImg5(originalFilename);
                         }
                         imageRepository.save(image);
                     } catch (IOException e) {

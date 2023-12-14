@@ -1,42 +1,56 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{client/layout.html}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{client/layout.html}">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <section layout:fragment="client-body">
         <div class="single-product-area section-padding">
-            <div class="container">
+            <div class="container" th:if="${book}">
                 <div class="row">
                     <div class="col-md-6 col-sm-7">
                         <div class="single-product-image-inner">
                             <!-- Tab panes -->
                             <div class="tab-content">
+
                                 <div role="tabpanel" class="tab-pane active" id="one">
                                     <a class="venobox" href="img/single-product/bg-1.jpg" data-gall="gallery" title="">
-                                        <img th:src="@{/user/img/single-product/bg-1.jpg}" alt="">
+                                        <img th:src="@{'/images/'+${book.image}}" alt="">
                                     </a>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="two">
-                                    <a class="venobox" href="img/single-product/bg-2.jpg" data-gall="gallery" title="">
-                                        <img th:src="@{/user/img/single-product/bg-2.jpg}" alt="">
-                                    </a>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="three">
-                                    <a class="venobox" th:href="@{/user/img/single-product/bg-3.jpg}" data-gall="gallery" title="">
-                                        <img th:src="@{/user/img/single-product/bg-3.jpg}" alt="">
-                                    </a>
-                                </div>
+                                <th:block th:each="i:${book.img}">
+                                    <div role="tabpanel" class="tab-pane" id="two">
+                                        <a class="venobox" th:href="@{'/images/'+${i.img2}}" data-gall="gallery"
+                                            title="">
+                                            <img th:src="@{'/images/'+${i.img2}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="three">
+                                        <a class="venobox" th:href="@{'/images/'+${i.img3}}" data-gall="gallery"
+                                            title="">
+                                            <img th:src="@{'/images/'+${i.img3}}" alt="">
+                                        </a>
+                                    </div>
+                                </th:block>
                             </div>
                             <!-- Nav tabs -->
-                            <ul class="product-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/1.jpg}" alt=""></a></li>
-                                <li role="presentation"><a href="#two" aria-controls="two" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/2.jpg}" alt=""></a></li>
-                                <li role="presentation"><a href="#three" aria-controls="three" role="tab" data-toggle="tab"><img th:src="@{/user/img/single-product/3.jpg}" alt=""></a></li>
+                            <ul class="product-tabs" role="tablist" th:each="i,index:${book.img}">
+                                <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab"
+                                        data-toggle="tab"><img width="50px" th:src="@{'/images/'+${i.img2}}" alt=""></a>
+                                </li>
+                                <li role="presentation"><a href="#two" aria-controls="two" role="tab"
+                                        data-toggle="tab"><img width="50px" th:src="@{'/images/'+${i.img2}}" alt=""></a>
+                                </li>
+                                <li role="presentation"><a href="#three" aria-controls="three" role="tab"
+                                        data-toggle="tab"><img width="50px" th:src="@{'/images/'+${i.img3}}" alt=""></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -49,26 +63,29 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                 <i class="fa fa-star icolor"></i>
                                 <i class="fa fa-star"></i>
                             </div>
-                            <h2>Lạc quan tếu</h2>
+                            <h2 th:text="${book.title}">Lạc quan tếu</h2>
                             <div class="availability">
-                                <span>In stock</span>
+                                <span th:if="${book.quantity>0}">Còn hàng</span>
+                                <span th:unless="${book.quantity>0}">Hết hàng</span>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                            <!-- <p th:utext="${book.description}">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p> -->
                             <div class="single-product-price">
-                                <h2>68.000đ</h2>
+                                <h2 th:text="${#numbers.formatDecimal(book.price,3,'POINT',0,'COMMA')}+'đ'">68.000đ</h2>
                             </div>
                             <div class="product-attributes clearfix">
                                 <span class="pull-left" id="quantity-wanted-p">
-									<span class="dec qtybutton">-</span>
-									<input type="text" value="1" class="cart-plus-minus-box">
-									<span class="inc qtybutton">+</span>	
-								</span>
-                               <span>
-                                    <a class="cart-btn btn-default" href="cart.html">
+                                    <span class="dec qtybutton">-</span>
+                                    <input type="text" value="1" class="cart-plus-minus-box" id="soluong">
+                                    <input type="text" hidden class="book_id" th:value="${book.id}">
+                                    <span class="inc qtybutton">+</span>
+                                </span>
+                                <span>
+                                    <a class="cart-btn btn-default" style="cursor: pointer;"
+                                        th:onclick="addCartQuantity([[${book.id}]],[[${book.price}]])">
                                         <i class="flaticon-shop"></i>
                                         Add to cart
                                     </a>
-                               </span>
+                                </span>
                             </div>
                             <div class="add-to-wishlist">
                                 <a class="wish-btn" href="cart.html">
@@ -77,8 +94,13 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                 </a>
                             </div>
                             <div class="single-product-categories">
-                               <label>Categories:</label>
-                                <span>e-book, biological, business</span>
+                                <label>Thể loại:</label>
+                                <span th:text="${book.category.name}">e-book, biological, business</span>
+                            </div>
+                            <div class="single-product-categories">
+                                <label>Tác giả:</label>
+                                <span th:each="a : ${book.authors}" th:text="${a.name}+'    |'">e-book, biological,
+                                    business</span>
                             </div>
                             <div class="social-share">
                                 <label>Share: </label>
@@ -86,64 +108,85 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                     <li><a href="#"><i class="flaticon-social"></i></a></li>
                                     <li><a href="#"><i class="flaticon-social-1"></i></a></li>
                                     <li><a href="#"><i class="flaticon-social-2"></i></a></li>
-                                </ul> 
+                                </ul>
                             </div>
                             <div id="product-comments-block-extra">
-								<ul class="comments-advices">
-									<li>
-										<a href="#" class="open-comment-form">Write a review</a>
-									</li>
-								</ul>
-							</div>
+                                <ul class="comments-advices">
+                                    <li>
+                                        <a href="#" class="open-comment-form">Write a review</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-					<div class="col-md-9">
+                    <div class="col-md-9">
                         <div class="p-details-tab-content">
                             <div class="p-details-tab">
                                 <ul class="p-details-nav-tab" role="tablist">
-                                    <li role="presentation" class="active"><a href="#more-info" aria-controls="more-info" role="tab" data-toggle="tab">Description</a></li>
-                                    <li role="presentation"><a href="#data" aria-controls="data" role="tab" data-toggle="tab">Review</a></li>
-                                    <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Tab</a></li>
+                                    <li role="presentation" class="active"><a href="#more-info"
+                                            aria-controls="more-info" role="tab" data-toggle="tab">Description</a></li>
+                                    <li role="presentation"><a href="#data" aria-controls="data" role="tab"
+                                            data-toggle="tab">Review</a></li>
+                                    <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab"
+                                            data-toggle="tab">Tab</a></li>
                                 </ul>
                             </div>
                             <div class="clearfix"></div>
                             <div class="tab-content review">
                                 <div role="tabpanel" class="tab-pane active" id="more-info">
-                                    <p>Nếu tìm kiếm trên Google những cuốn sách tài chính kinh điển mà mọi nhà đầu tư nên đọc, bạn sẽ thấy cái tên Lạc Quan Tếu (Irrational Exuberance) của giáo sư kinh tế học Robert Shiller xuất hiện ở nhiều danh sách uy tín khác nhau. 
+                                    <p th:utext="${book.description}">Nếu tìm kiếm trên Google những cuốn sách tài chính
+                                        kinh điển mà mọi nhà đầu tư
+                                        nên đọc, bạn sẽ thấy cái tên Lạc Quan Tếu (Irrational Exuberance) của giáo sư
+                                        kinh tế học Robert Shiller xuất hiện ở nhiều danh sách uy tín khác nhau.
 
-                                        Và khi Robert Shiller cảnh báo bong bóng đang nổi lên khắp nơi trên thị trường, mọi người đều phải thận trọng lắng nghe.
-                                        
-                                        Nếu như tương lai của bạn phụ thuộc vào tài khoản hưu trí, nhà ở, chứng khoán hoặc bất cứ khoản đầu tư nào khác, cuốn sách Lạc Quan Tếu của Robert Shiller là tài liệu bạn bắt buộc phải nghiên cứu thật kỹ lưỡng.</p>
+                                        Và khi Robert Shiller cảnh báo bong bóng đang nổi lên khắp nơi trên thị trường,
+                                        mọi người đều phải thận trọng lắng nghe.
+
+                                        Nếu như tương lai của bạn phụ thuộc vào tài khoản hưu trí, nhà ở, chứng khoán
+                                        hoặc bất cứ khoản đầu tư nào khác, cuốn sách Lạc Quan Tếu của Robert Shiller là
+                                        tài liệu bạn bắt buộc phải nghiên cứu thật kỹ lưỡng.</p>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="data">
-                                    <table class="table-data-sheet">
-                                        <tbody>
-                                            <tr class="odd">
-                                                <td>material</td>
-                                                <td> Bristol</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td>Size</td>
-                                                <td>27cm x 24cm</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td>classify</td>
-                                                <td>new</td>
-                                            </tr>
-                                        </tbody>
-                                   </table>
+                                    <div style="margin-bottom: 10px;" sec:authorize="isAuthenticated()">
+
+                                        <p class="form-row country-select shop-select">
+                                            <select id="r_rating">
+                                                <option value="0">Chọn đánh giá</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+
+
+                                            </select>
+                                        </p>
+                                        <p class="form-row order-notes">
+                                            <textarea id="comment" placeholder="Additional comment"
+                                                name="comment"></textarea>
+                                        </p>
+
+                                        <button onclick="addReview()" class="btn btn-primary">Gửi</button>
+                                    </div>
+                                    <p class="message text-success "></p>
+                                    <div class="row loadReview bg bg-info">
+
+                                    </div>
+
+
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="reviews">
                                     <div id="product-comments-block-tab">
-                                        <a href="#" class="comment-btn"><span>Be the first to write your review!</span></a>
+                                        <a href="#" class="comment-btn"><span>Be the first to write your
+                                                review!</span></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-					</div>
-				</div>  
+                    </div>
+                </div>
             </div>
         </div>
         <div class="related-product-area">
@@ -206,7 +249,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <a href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart-o"></i>
                                             </a>
-                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                            <a href="#" title="Quick view" data-toggle="modal"
+                                                data-target="#productModal">
                                                 <i class="fa fa-compress"></i>
                                             </a>
                                         </div>
@@ -239,7 +283,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <a href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart-o"></i>
                                             </a>
-                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                            <a href="#" title="Quick view" data-toggle="modal"
+                                                data-target="#productModal">
                                                 <i class="fa fa-compress"></i>
                                             </a>
                                         </div>
@@ -272,14 +317,16 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <a href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart-o"></i>
                                             </a>
-                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                            <a href="#" title="Quick view" data-toggle="modal"
+                                                data-target="#productModal">
                                                 <i class="fa fa-compress"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="banner-bottom text-center">
-                                    <a href="#">Kể Chuyện Cuộc Đời Các Thiên Tài - Albert Einstein Tuổi Thơ Gian Khó...</a>
+                                    <a href="#">Kể Chuyện Cuộc Đời Các Thiên Tài - Albert Einstein Tuổi Thơ Gian
+                                        Khó...</a>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +352,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <a href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart-o"></i>
                                             </a>
-                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                            <a href="#" title="Quick view" data-toggle="modal"
+                                                data-target="#productModal">
                                                 <i class="fa fa-compress"></i>
                                             </a>
                                         </div>
@@ -317,7 +365,7 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                             </div>
                         </div>
                         <div class="col-md-3">
-                               <div class="single-banner">
+                            <div class="single-banner">
                                 <div class="product-wrapper">
                                     <a href="#" class="single-banner-image-wrapper">
                                         <img alt="" th:src="@{/user/img/featured/6.jpg}">
@@ -338,7 +386,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                             <a href="#" title="Add to Wishlist">
                                                 <i class="fa fa-heart-o"></i>
                                             </a>
-                                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
+                                            <a href="#" title="Quick view" data-toggle="modal"
+                                                data-target="#productModal">
                                                 <i class="fa fa-compress"></i>
                                             </a>
                                         </div>
@@ -354,5 +403,138 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
             </div>
         </div>
     </section>
+
+    <div layout:fragment="script">
+        <script>
+            function addCartQuantity(book_id, w_price) {
+                let sl = $("#soluong").val();
+                if (sl <= 0) {
+                    alert("Số lượng thêm vào phải lớn hơn 1")
+                    return false;
+                }
+                let itemToAdd = {
+                    book_id: book_id,
+                    price: w_price,
+                    quantity: sl,
+                    // Thêm các thuộc tính khác tại đây
+                };
+                $.ajax({
+                    url: "http://localhost:8080/BookStore/api/cart/add", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(itemToAdd),
+                    success: function (data) {
+                        alert("Thêm vào giỏ hàng thành công");
+
+                        getAllCart();
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                    },
+                });
+            }
+            getAllReView();
+            function getAllReView() {
+                // alert($(".book_id").val())
+                $.ajax({
+                    url: "http://localhost:8080/BookStore/api/review/getAll/" + $(".book_id").val(), // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+                    type: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+
+                        $(".loadReview").empty();
+
+                        let i = 0;
+                        data.forEach(function (data) {
+                            var saod = '<div class="rating-icon">'
+
+                            if (data.rating == 1) {
+                                saod += '<i class="fa fa-star icolor"></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i>'
+                            }
+                            if (data.rating == 2) {
+                                saod += '<i class="fa fa-star icolor"></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i>'
+                            }
+                            if (data.rating == 3) {
+                                saod += '<i class="fa fa-star icolor"></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star "></i></i><i class="fa fa-star "></i>'
+                            }
+                            if (data.rating == 4) {
+                                saod += '<i class="fa fa-star icolor"></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star "></i>'
+                            }
+                            if (data.rating == 5) {
+                                saod += '<i class="fa fa-star icolor"></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i></i><i class="fa fa-star icolor"></i>'
+                            }
+                            const options = { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                            var date = new Date(data.created_at);
+                            let formattedDate = date.toLocaleDateString('en-GB', options);
+                            var create_at = '<p> Ngày đăng: ' + formattedDate + '</p>'
+                            var r = '<p><strong >' + data.user.fullname + ': </strong>  <span>' + data.comment + '</span></p>'
+
+                            saod += '</div>'
+
+
+                            $(".loadReview").append(create_at);
+                            $(".loadReview").append(saod);
+
+                            $(".loadReview").append(r);
+                            if (data.admin !== null&&data.reply!==null) {
+                                date = new Date(data.updated_at);
+                                formattedDate = date.toLocaleDateString('en-GB', options);
+                                var rep = '<p style="margin-left:20px">------------><strong >' + data.admin.fullname + ': </strong>  <span>' + data.reply + '</span> <span style="float:right">' + formattedDate + '</span></p>'
+                                $(".loadReview").append(rep);
+
+                            }
+
+
+                        });
+
+
+                    },
+                    error: function (response) {
+                        console.log("Lỗi khi tải dữ liệu qua AJAX");
+                    },
+                });
+
+            }
+            function addReview() {
+
+                let itemToAddR = {
+                    book_id: $('.book_id').val(),
+                    comment: $('#comment').val(),
+                    rating: $('#r_rating').val(),
+                };
+                $(".message").empty();
+
+                $.ajax({
+                    url: "http://localhost:8080/BookStore/api/review/comment", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(itemToAddR),
+                    success: function (data) {
+
+                        getAllReView();
+                        $('#comment').val(""),
+                        $('#r_rating').val(""),
+                        $(".message").html("Đánh giá thành công");
+
+                        $('.message').fadeIn();
+                        $(".message").addClass("alert alert-success")
+                        setTimeout(() => {
+                            $(".message").empty();
+                            $(".message").removeClass("alert alert-success")
+
+
+                        }, 5000);
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                        return false;
+
+                    },
+                });
+            }
+        </script>
+    </div>
 </body>
+
 </html>

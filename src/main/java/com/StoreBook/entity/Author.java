@@ -1,6 +1,5 @@
 package com.StoreBook.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.*;
 
 import lombok.*;
 
@@ -27,5 +27,6 @@ public class Author {
 
 	
 	@ManyToMany(mappedBy = "authors")
-	private Set<Book> books = new HashSet<>();
+	@JsonIgnoreProperties("authors")
+	private Set<Book> books ;
 }

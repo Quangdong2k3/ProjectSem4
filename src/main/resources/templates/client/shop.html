@@ -170,8 +170,8 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                             
                             <div class="tab-content">
                                 <div class="row tab-pane fade in active" id="home">
-                                    <div class="shop-single-product-area">
-                                        <div class="col-md-4 col-sm-6" th:each="b : ${book}">
+                                    <div class="shop-single-product-area" th:each="b : ${book}">
+                                        <div class="col-md-4 col-sm-6" >
 											<div class="single-banner">
 												<div class="product-wrapper">
 													<a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" class="single-banner-image-wrapper">
@@ -240,11 +240,11 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </div>
-                                                    <p>Tác giả : Helen Odessky
-                                                        NXB: <span th:text="${b.getPublisher().getName()}"></span></p>
+                                                    <p>Tác giả : <span th:each="author : ${b.authors}" th:text="${author.name}"></span>
+                                                        NXB: <span th:text="${b.publisher.name}"></span></p>
                                                     <div class="availability">
                                                         <span>In stock</span>
-                                                        <span><a href="cart.html">Add to cart</a></span>
+                                                        <span><a style="cursor: pointer;" th:onclick="addCart([[${b.id}]],[[${b.price}]],1)">Add to cart</a></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -280,14 +280,14 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
                                     </div>
                                     <a th:href="@{/BookStore/client/book/{id}/detail(id=${b.id})}" class="see-all">See all features</a>
                                     <div class="quick-add-to-cart">
-                                        <form method="post" class="cart">
+                                        <form  class="cart">
                                             <div class="numbers-row">
-                                                <input type="number" id="french-hens" value="3">
+                                                <input type="number" id="french-hens" min="1">
                                             </div>
-                                            <button class="single_add_to_cart_button" type="submit">Add to cart</button>
+                                            <button class="single_add_to_cart_button" type="submit" th:onclick="addCartQuantity([[${b.id}]],[[${b.price}]])">Add to cart</button>
                                         </form>
                                     </div>
-                                    <div class="quick-desc" th:text="${b.description}">
+                                    <div class="quick-desc" th:utext="${b.description}">
                                     </div>
                                     <div class="social-sharing">
                                         <div class="widget widget_socialsharing_widget">
@@ -310,12 +310,37 @@ xsi:schemaLocation="http://www.thymeleaf.org " xmlns:layout="http://www.ultraq.n
         </div>
         <!--End of Quickview Product-->	
     </section>
-    <div layout:fragment="client-script">
-		
-	
-        
-                
-        
+    <div layout:fragment="script">
+        <script>
+            function addCartQuantity(book_id, w_price) {
+                let sl = $("#french-hens").val() ;
+                alert(sl)
+                if(sl<=0){
+                   alert("Số lượng thêm vào phải lớn hơn 1") 
+                   return false;
+                }
+                let itemToAdd = {
+                    book_id: book_id,
+                    price: w_price,
+                    quantity: sl,
+                    // Thêm các thuộc tính khác tại đây
+                };
+                $.ajax({
+                    url: "http://localhost:8080/BookStore/api/cart/add", // Thay thế bằng URL của API hoặc phương thức máy chủ của bạn.
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(itemToAdd),
+                    success: function (data) {
+                        alert("Thêm vào giỏ hàng thành công");
+
+                        getAllCart();
+                    },
+                    error: function (error) {
+                        console.log(error.responseText);
+                    },
+                });
+            }
+        </script>
     </div>
 </body>
 </html>

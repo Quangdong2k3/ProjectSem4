@@ -89,28 +89,28 @@ public class BookController {
 
 			for (MultipartFile f : fo.getFiles()) {
 				if (count == 0) {
-					image.setImgone(f.getOriginalFilename());
+					image.setImg1(f.getOriginalFilename());
 					checkImgExist(uploadDir, f);
 				}
 				if (count == 1) {
-					image.setImgtwo(f.getOriginalFilename());
+					image.setImg2(f.getOriginalFilename());
 					checkImgExist(uploadDir, f);
 				}
 				if (count == 2) {
-					image.setImgthree(f.getOriginalFilename());
+					image.setImg3(f.getOriginalFilename());
 					checkImgExist(uploadDir, f);
 				}
 				if (count == 3) {
-					image.setImgfour(f.getOriginalFilename());
+					image.setImg4(f.getOriginalFilename());
 					checkImgExist(uploadDir, f);
 				}
 				if (count == 4) {
-					image.setImgfive(f.getOriginalFilename());
+					image.setImg5(f.getOriginalFilename());
 					checkImgExist(uploadDir, f);
 				}
 				count++;
 			}
-
+			image.setBook(bookService.getById1(fo.getBookid()));
 			imageRepository.save(image);
 			return "redirect:";
 		}
@@ -142,6 +142,7 @@ public class BookController {
 	CategoryService categoryService;
 	@Autowired
 	PublisherService publisherService;
+	
 
 	@GetMapping("create")
 	public String create(Model model) {
@@ -150,6 +151,7 @@ public class BookController {
 		model.addAttribute("book", new BookDTO());
 		model.addAttribute("category", categoryService.getAll());
 		model.addAttribute("publisher", publisherService.getAll());
+		model.addAttribute("author", authorService.getAll());
 		return "admin/book/insert";
 	}
 
@@ -164,6 +166,8 @@ public class BookController {
 			redirectAttributes.addFlashAttribute("publication_date", bookDTO.getPublication_date());
 			model.addAttribute("category", categoryService.getAll());
 			model.addAttribute("publisher", publisherService.getAll());
+					model.addAttribute("author", authorService.getAll());
+
 			return "admin/book/insert";
 		} else {
 			int dem = 0;
@@ -196,6 +200,8 @@ public class BookController {
 		model.addAttribute("book", bookService.getById(id));
 		model.addAttribute("category", categoryService.getAll());
 		model.addAttribute("publisher", publisherService.getAll());
+							model.addAttribute("author", authorService.getAll());
+
 		return "admin/book/edit";
 	}
 
@@ -210,6 +216,8 @@ public class BookController {
 			redirectAttributes.addFlashAttribute("publication_date", bookDTO.getPublication_date());
 			model.addAttribute("category", categoryService.getAll());
 			model.addAttribute("publisher", publisherService.getAll());
+								model.addAttribute("author", authorService.getAll());
+
 			return new ModelAndView("admin/book/edit");
 		} else {
 			int dem = 0;
@@ -228,35 +236,57 @@ public class BookController {
 		}
 
 	}
-	@Autowired 
-	 AuthorService authorService;
-	@GetMapping(value="book_Author")
-	public ModelAndView creatBookAuthor(@Valid @ModelAttribute BookAuthor bookAuthor,BindingResult bindingResult){
+
+	@Autowired
+	AuthorService authorService;
+@GetMapping(value = "book_author")
+	public ModelAndView BookAuthor(@Valid @ModelAttribute BookAuthor bookAuthor, BindingResult bindingResult) {
+		ModelAndView view = new ModelAndView("admin/book_author/book");
+		view.addObject("titleName", "List Book Author");
+		view.addObject("pageName", "List Book Author");
+		view.addObject("list", bookService.getAll());
+
+		return view;
+	}
+	
+
+@PostMapping(value = "book_author/{id}/delete")
+	public String deleteBookAuthor(@PathVariable(name = "id") Long id,RedirectAttributes redirectAttributes) {
+		bookService.AuthordeleteByBookid(id);
+		
+		redirectAttributes.addFlashAttribute("message", "Xóa dữ liệu thành công");
+
+		return "redirect:/BookStore/admin/book/book_author";
+	}
+	@GetMapping(value = "book_author/create")
+	public ModelAndView creatBookAuthor(@Valid @ModelAttribute BookAuthor bookAuthor, BindingResult bindingResult) {
 		ModelAndView view = new ModelAndView("admin/book_author/insert");
 		view.addObject("titleName", "Create Book Author");
 		view.addObject("pageName", "Create Book Author");
 		view.addObject("book", bookService.getAll());
 		view.addObject("author", authorService.getAll());
-		view.addObject("bookauthor",new BookAuthor());
+		view.addObject("bookauthor", new BookAuthor());
 
 		return view;
 	}
-	@PostMapping(value="book_Author")
-	public ModelAndView insertBookAuthor(@Valid @ModelAttribute(name="bookauthor") BookAuthor bookAuthor,BindingResult bindingResult, RedirectAttributes redirectAttributes){
-		if(bindingResult.hasErrors()){
+
+	@PostMapping(value = "book_author/insert")
+	public ModelAndView insertBookAuthor(@Valid @ModelAttribute(name = "bookauthor") BookAuthor bookAuthor,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		if (bindingResult.hasErrors()) {
 			ModelAndView view = new ModelAndView("admin/book_author/insert");
 			view.addObject("titleName", "Create Book Author");
 			view.addObject("pageName", "Create Book Author");
 			view.addObject("book", bookService.getAll());
 			view.addObject("author", authorService.getAll());
 			// view.addObject("bookauthor",bookAuthor);
-	
+
 			return view;
-		}else{
+		} else {
 			redirectAttributes.addFlashAttribute("message", "Thêm dữ liệu thành công");
 			bookService.addBookAuthor(bookAuthor);
 			return new ModelAndView(new RedirectView("/admin/book/book_Author"));
 		}
-		
+
 	}
 }

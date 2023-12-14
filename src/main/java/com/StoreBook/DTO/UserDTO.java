@@ -1,10 +1,8 @@
 package com.StoreBook.DTO;
 
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 
@@ -34,5 +32,8 @@ public class UserDTO {
     
     @AssertTrue(message = "Bạn phải đồng ý với điều khoản")
     private boolean terms;
+
+    private String address;
+	private String phone;
     
 }
